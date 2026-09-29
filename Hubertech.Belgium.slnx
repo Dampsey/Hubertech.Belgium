@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/benchmarks/">
+    <Project Path="benchmarks/Hubertech.Belgium.Benchmarks/Hubertech.Belgium.Benchmarks.csproj" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/Hubertech.Belgium/Hubertech.Belgium.csproj" />
   </Folder>
