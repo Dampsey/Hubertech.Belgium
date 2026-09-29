@@ -10,8 +10,9 @@
   <PropertyGroup>
     <IsPackable>true</IsPackable>
     <PackageId>Hubertech.Belgium</PackageId>
-    <Authors>Adrien Hubert</Authors>
+    <Authors>Dampsey</Authors>
     <Company>Hubertech</Company>
+    <Copyright>Copyright (c) 2026 Dampsey</Copyright>
     <Description>Belgian administrative identifiers and rules for .NET: enterprise number (BCE/KBO), structured communication (OGM/VCS), Belgian IBAN, public holidays and business days. Allocation-free parsing, no dependencies, and validation errors with stable codes and localized messages (English, French, Dutch).</Description>
     <PackageTags>belgium;belgian;bce;kbo;enterprise-number;vat;structured-communication;ogm;vcs;iban;holidays;business-days;validation</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
