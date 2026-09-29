@@ -19,8 +19,27 @@ Hubertech.Belgium.BelgianValidationError.GetMessage(System.Globalization.Culture
 Hubertech.Belgium.BelgianValidationError.Message.get -> string!
 Hubertech.Belgium.BelgianValidationError.Position.get -> int?
 Hubertech.Belgium.BelgianValidationError.TypeName.get -> string!
+Hubertech.Belgium.EnterpriseNumber
+Hubertech.Belgium.EnterpriseNumber.EnterpriseNumber() -> void
+Hubertech.Belgium.EnterpriseNumber.Equals(Hubertech.Belgium.EnterpriseNumber other) -> bool
+Hubertech.Belgium.EnterpriseNumber.IsEmpty.get -> bool
+Hubertech.Belgium.EnterpriseNumber.ToString(string? format) -> string!
+Hubertech.Belgium.EnterpriseNumber.TryFormat(System.Span<char> destination, out int charsWritten, System.ReadOnlySpan<char> format = default(System.ReadOnlySpan<char>)) -> bool
 override Hubertech.Belgium.BelgianValidationError.GetHashCode() -> int
+override Hubertech.Belgium.EnterpriseNumber.Equals(object? obj) -> bool
+override Hubertech.Belgium.EnterpriseNumber.GetHashCode() -> int
+override Hubertech.Belgium.EnterpriseNumber.ToString() -> string!
 static Hubertech.Belgium.BelgianValidationError.operator !=(Hubertech.Belgium.BelgianValidationError left, Hubertech.Belgium.BelgianValidationError right) -> bool
 static Hubertech.Belgium.BelgianValidationError.operator ==(Hubertech.Belgium.BelgianValidationError left, Hubertech.Belgium.BelgianValidationError right) -> bool
+static Hubertech.Belgium.EnterpriseNumber.Parse(System.ReadOnlySpan<char> s) -> Hubertech.Belgium.EnterpriseNumber
+static Hubertech.Belgium.EnterpriseNumber.Parse(string! s) -> Hubertech.Belgium.EnterpriseNumber
+static Hubertech.Belgium.EnterpriseNumber.TryParse(System.ReadOnlySpan<char> s, out Hubertech.Belgium.EnterpriseNumber result) -> bool
+static Hubertech.Belgium.EnterpriseNumber.TryParse(System.ReadOnlySpan<char> s, out Hubertech.Belgium.EnterpriseNumber result, out Hubertech.Belgium.BelgianValidationError error) -> bool
+static Hubertech.Belgium.EnterpriseNumber.TryParse(string? s, out Hubertech.Belgium.EnterpriseNumber result) -> bool
+static Hubertech.Belgium.EnterpriseNumber.TryParse(string? s, out Hubertech.Belgium.EnterpriseNumber result, out Hubertech.Belgium.BelgianValidationError error) -> bool
+static Hubertech.Belgium.EnterpriseNumber.Validate(System.ReadOnlySpan<char> s) -> Hubertech.Belgium.BelgianValidationError?
+static Hubertech.Belgium.EnterpriseNumber.Validate(string? s) -> Hubertech.Belgium.BelgianValidationError?
+static Hubertech.Belgium.EnterpriseNumber.operator !=(Hubertech.Belgium.EnterpriseNumber left, Hubertech.Belgium.EnterpriseNumber right) -> bool
+static Hubertech.Belgium.EnterpriseNumber.operator ==(Hubertech.Belgium.EnterpriseNumber left, Hubertech.Belgium.EnterpriseNumber right) -> bool
 ~override Hubertech.Belgium.BelgianValidationError.Equals(object obj) -> bool
 ~override Hubertech.Belgium.BelgianValidationError.ToString() -> string
