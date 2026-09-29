@@ -1,1 +1,23 @@
 #nullable enable
+Hubertech.Belgium.BelgianErrorCode
+Hubertech.Belgium.BelgianErrorCode.Empty = 1 -> Hubertech.Belgium.BelgianErrorCode
+Hubertech.Belgium.BelgianErrorCode.InvalidCharacter = 2 -> Hubertech.Belgium.BelgianErrorCode
+Hubertech.Belgium.BelgianErrorCode.InvalidChecksum = 6 -> Hubertech.Belgium.BelgianErrorCode
+Hubertech.Belgium.BelgianErrorCode.InvalidCountryCode = 4 -> Hubertech.Belgium.BelgianErrorCode
+Hubertech.Belgium.BelgianErrorCode.InvalidFirstDigit = 5 -> Hubertech.Belgium.BelgianErrorCode
+Hubertech.Belgium.BelgianErrorCode.InvalidLength = 3 -> Hubertech.Belgium.BelgianErrorCode
+Hubertech.Belgium.BelgianErrorCode.None = 0 -> Hubertech.Belgium.BelgianErrorCode
+Hubertech.Belgium.BelgianValidationError
+Hubertech.Belgium.BelgianValidationError.BelgianValidationError() -> void
+Hubertech.Belgium.BelgianValidationError.Code.get -> Hubertech.Belgium.BelgianErrorCode
+Hubertech.Belgium.BelgianValidationError.Equals(Hubertech.Belgium.BelgianValidationError other) -> bool
+Hubertech.Belgium.BelgianValidationError.Expected.get -> string?
+Hubertech.Belgium.BelgianValidationError.GetMessage(System.Globalization.CultureInfo! culture) -> string!
+Hubertech.Belgium.BelgianValidationError.Message.get -> string!
+Hubertech.Belgium.BelgianValidationError.Position.get -> int?
+Hubertech.Belgium.BelgianValidationError.TypeName.get -> string!
+override Hubertech.Belgium.BelgianValidationError.GetHashCode() -> int
+static Hubertech.Belgium.BelgianValidationError.operator !=(Hubertech.Belgium.BelgianValidationError left, Hubertech.Belgium.BelgianValidationError right) -> bool
+static Hubertech.Belgium.BelgianValidationError.operator ==(Hubertech.Belgium.BelgianValidationError left, Hubertech.Belgium.BelgianValidationError right) -> bool
+~override Hubertech.Belgium.BelgianValidationError.Equals(object obj) -> bool
+~override Hubertech.Belgium.BelgianValidationError.ToString() -> string
