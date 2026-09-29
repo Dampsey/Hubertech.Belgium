@@ -5,3 +5,4 @@ Each structuring decision is recorded in a short document: context, options cons
 | # | Title | Status |
 | --- | --- | --- |
 | [0001](0001-versioning-strategy.md) | Versioning strategy | Accepted |
+| [0002](0002-error-model.md) | Error model | Accepted |
