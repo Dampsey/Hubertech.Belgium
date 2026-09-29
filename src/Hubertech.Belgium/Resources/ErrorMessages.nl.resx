@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="EnterpriseNumber_Empty" xml:space="preserve">
+    <value>Het ondernemingsnummer is leeg.</value>
+  </data>
+  <data name="EnterpriseNumber_InvalidCharacter" xml:space="preserve">
+    <value>Het ondernemingsnummer bevat een ongeldig teken, '{0}', op positie {1}.</value>
+  </data>
+  <data name="EnterpriseNumber_InvalidLength" xml:space="preserve">
+    <value>Het ondernemingsnummer moet 10 cijfers bevatten.</value>
+  </data>
+  <data name="EnterpriseNumber_InvalidCountryCode" xml:space="preserve">
+    <value>Alleen Belgische ondernemingsnummers worden aanvaard (prefix BE).</value>
+  </data>
+  <data name="EnterpriseNumber_InvalidFirstDigit" xml:space="preserve">
+    <value>Het ondernemingsnummer moet met 0 of 1 beginnen.</value>
+  </data>
+  <data name="EnterpriseNumber_InvalidChecksum" xml:space="preserve">
+    <value>Het ondernemingsnummer is ongeldig: de controlecijfers kloppen niet. Controleer of het geen tikfout bevat.</value>
+  </data>
+  <data name="StructuredCommunication_Empty" xml:space="preserve">
+    <value>De gestructureerde mededeling is leeg.</value>
+  </data>
+  <data name="StructuredCommunication_InvalidCharacter" xml:space="preserve">
+    <value>De gestructureerde mededeling bevat een ongeldig teken, '{0}', op positie {1}.</value>
+  </data>
+  <data name="StructuredCommunication_InvalidLength" xml:space="preserve">
+    <value>De gestructureerde mededeling moet 12 cijfers bevatten.</value>
+  </data>
+  <data name="StructuredCommunication_InvalidChecksum" xml:space="preserve">
+    <value>De gestructureerde mededeling is ongeldig: de controlecijfers kloppen niet. Controleer of ze geen tikfout bevat.</value>
+  </data>
+  <data name="BelgianIban_Empty" xml:space="preserve">
+    <value>Het IBAN-nummer is leeg.</value>
+  </data>
+  <data name="BelgianIban_InvalidCharacter" xml:space="preserve">
+    <value>Het IBAN-nummer bevat een ongeldig teken, '{0}', op positie {1}.</value>
+  </data>
+  <data name="BelgianIban_InvalidLength" xml:space="preserve">
+    <value>Een Belgisch IBAN-nummer moet 16 tekens bevatten: BE gevolgd door 14 cijfers.</value>
+  </data>
+  <data name="BelgianIban_InvalidCountryCode" xml:space="preserve">
+    <value>Alleen Belgische IBAN-nummers worden aanvaard (beginnend met BE).</value>
+  </data>
+  <data name="BelgianIban_InvalidChecksum" xml:space="preserve">
+    <value>Het IBAN-nummer is ongeldig: de controlecijfers kloppen niet. Controleer of het geen tikfout bevat.</value>
+  </data>
+</root>

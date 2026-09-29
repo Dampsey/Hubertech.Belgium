@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="EnterpriseNumber_Empty" xml:space="preserve">
+    <value>The enterprise number is empty.</value>
+  </data>
+  <data name="EnterpriseNumber_InvalidCharacter" xml:space="preserve">
+    <value>The enterprise number contains an invalid character, '{0}', at position {1}.</value>
+  </data>
+  <data name="EnterpriseNumber_InvalidLength" xml:space="preserve">
+    <value>The enterprise number must contain 10 digits.</value>
+  </data>
+  <data name="EnterpriseNumber_InvalidCountryCode" xml:space="preserve">
+    <value>Only Belgian enterprise numbers are accepted (prefix BE).</value>
+  </data>
+  <data name="EnterpriseNumber_InvalidFirstDigit" xml:space="preserve">
+    <value>The enterprise number must start with 0 or 1.</value>
+  </data>
+  <data name="EnterpriseNumber_InvalidChecksum" xml:space="preserve">
+    <value>The enterprise number is invalid: its check digits do not match. Please check it for typing errors.</value>
+  </data>
+  <data name="StructuredCommunication_Empty" xml:space="preserve">
+    <value>The structured communication is empty.</value>
+  </data>
+  <data name="StructuredCommunication_InvalidCharacter" xml:space="preserve">
+    <value>The structured communication contains an invalid character, '{0}', at position {1}.</value>
+  </data>
+  <data name="StructuredCommunication_InvalidLength" xml:space="preserve">
+    <value>The structured communication must contain 12 digits.</value>
+  </data>
+  <data name="StructuredCommunication_InvalidChecksum" xml:space="preserve">
+    <value>The structured communication is invalid: its check digits do not match. Please check it for typing errors.</value>
+  </data>
+  <data name="BelgianIban_Empty" xml:space="preserve">
+    <value>The IBAN is empty.</value>
+  </data>
+  <data name="BelgianIban_InvalidCharacter" xml:space="preserve">
+    <value>The IBAN contains an invalid character, '{0}', at position {1}.</value>
+  </data>
+  <data name="BelgianIban_InvalidLength" xml:space="preserve">
+    <value>A Belgian IBAN must contain 16 characters: BE followed by 14 digits.</value>
+  </data>
+  <data name="BelgianIban_InvalidCountryCode" xml:space="preserve">
+    <value>Only Belgian IBANs are accepted (starting with BE).</value>
+  </data>
+  <data name="BelgianIban_InvalidChecksum" xml:space="preserve">
+    <value>The IBAN is invalid: its check digits do not match. Please check it for typing errors.</value>
+  </data>
+</root>
