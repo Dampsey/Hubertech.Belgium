@@ -28,6 +28,7 @@ namespace Hubertech.Belgium;
 /// <see cref="IFormatProvider"/> are implemented explicitly and ignore it.
 /// </para>
 /// </remarks>
+/// <seealso href="https://www.ejustice.just.fgov.be/cgi_loi/change_lg.pl?language=nl&amp;la=N&amp;cn=2003062432&amp;table_name=wet">Royal Decree of 24 June 2003 on the composition of the enterprise number (consolidated text)</seealso>
 /// <seealso href="https://news.economie.fgov.be/228779-les-numeros-d-entreprise-passent-au-1/">FPS Economy: enterprise numbers starting with 1</seealso>
 public readonly struct EnterpriseNumber : IEquatable<EnterpriseNumber>, ISpanFormattable, ISpanParsable<EnterpriseNumber>
 {
