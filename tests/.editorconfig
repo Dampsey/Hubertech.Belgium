@@ -1,0 +1,7 @@
+[*.cs]
+
+# Test classes and methods are public for the test framework, not for consumers.
+dotnet_diagnostic.CS1591.severity = none
+
+# Test names are sentences: Method_under_test_behaves_like_this.
+dotnet_diagnostic.CA1707.severity = none
