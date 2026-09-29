@@ -25,10 +25,21 @@ Hubertech.Belgium.EnterpriseNumber.Equals(Hubertech.Belgium.EnterpriseNumber oth
 Hubertech.Belgium.EnterpriseNumber.IsEmpty.get -> bool
 Hubertech.Belgium.EnterpriseNumber.ToString(string? format) -> string!
 Hubertech.Belgium.EnterpriseNumber.TryFormat(System.Span<char> destination, out int charsWritten, System.ReadOnlySpan<char> format = default(System.ReadOnlySpan<char>)) -> bool
+Hubertech.Belgium.StructuredCommunication
+Hubertech.Belgium.StructuredCommunication.BaseNumber.get -> ulong
+Hubertech.Belgium.StructuredCommunication.Equals(Hubertech.Belgium.StructuredCommunication other) -> bool
+Hubertech.Belgium.StructuredCommunication.IsEmpty.get -> bool
+Hubertech.Belgium.StructuredCommunication.StructuredCommunication() -> void
+Hubertech.Belgium.StructuredCommunication.ToString(string? format) -> string!
+Hubertech.Belgium.StructuredCommunication.TryFormat(System.Span<char> destination, out int charsWritten, System.ReadOnlySpan<char> format = default(System.ReadOnlySpan<char>)) -> bool
+const Hubertech.Belgium.StructuredCommunication.MaxBaseNumber = 9999999999 -> ulong
 override Hubertech.Belgium.BelgianValidationError.GetHashCode() -> int
 override Hubertech.Belgium.EnterpriseNumber.Equals(object? obj) -> bool
 override Hubertech.Belgium.EnterpriseNumber.GetHashCode() -> int
 override Hubertech.Belgium.EnterpriseNumber.ToString() -> string!
+override Hubertech.Belgium.StructuredCommunication.Equals(object? obj) -> bool
+override Hubertech.Belgium.StructuredCommunication.GetHashCode() -> int
+override Hubertech.Belgium.StructuredCommunication.ToString() -> string!
 static Hubertech.Belgium.BelgianValidationError.operator !=(Hubertech.Belgium.BelgianValidationError left, Hubertech.Belgium.BelgianValidationError right) -> bool
 static Hubertech.Belgium.BelgianValidationError.operator ==(Hubertech.Belgium.BelgianValidationError left, Hubertech.Belgium.BelgianValidationError right) -> bool
 static Hubertech.Belgium.EnterpriseNumber.Parse(System.ReadOnlySpan<char> s) -> Hubertech.Belgium.EnterpriseNumber
@@ -41,5 +52,16 @@ static Hubertech.Belgium.EnterpriseNumber.Validate(System.ReadOnlySpan<char> s) 
 static Hubertech.Belgium.EnterpriseNumber.Validate(string? s) -> Hubertech.Belgium.BelgianValidationError?
 static Hubertech.Belgium.EnterpriseNumber.operator !=(Hubertech.Belgium.EnterpriseNumber left, Hubertech.Belgium.EnterpriseNumber right) -> bool
 static Hubertech.Belgium.EnterpriseNumber.operator ==(Hubertech.Belgium.EnterpriseNumber left, Hubertech.Belgium.EnterpriseNumber right) -> bool
+static Hubertech.Belgium.StructuredCommunication.FromNumber(ulong value) -> Hubertech.Belgium.StructuredCommunication
+static Hubertech.Belgium.StructuredCommunication.Parse(System.ReadOnlySpan<char> s) -> Hubertech.Belgium.StructuredCommunication
+static Hubertech.Belgium.StructuredCommunication.Parse(string! s) -> Hubertech.Belgium.StructuredCommunication
+static Hubertech.Belgium.StructuredCommunication.TryParse(System.ReadOnlySpan<char> s, out Hubertech.Belgium.StructuredCommunication result) -> bool
+static Hubertech.Belgium.StructuredCommunication.TryParse(System.ReadOnlySpan<char> s, out Hubertech.Belgium.StructuredCommunication result, out Hubertech.Belgium.BelgianValidationError error) -> bool
+static Hubertech.Belgium.StructuredCommunication.TryParse(string? s, out Hubertech.Belgium.StructuredCommunication result) -> bool
+static Hubertech.Belgium.StructuredCommunication.TryParse(string? s, out Hubertech.Belgium.StructuredCommunication result, out Hubertech.Belgium.BelgianValidationError error) -> bool
+static Hubertech.Belgium.StructuredCommunication.Validate(System.ReadOnlySpan<char> s) -> Hubertech.Belgium.BelgianValidationError?
+static Hubertech.Belgium.StructuredCommunication.Validate(string? s) -> Hubertech.Belgium.BelgianValidationError?
+static Hubertech.Belgium.StructuredCommunication.operator !=(Hubertech.Belgium.StructuredCommunication left, Hubertech.Belgium.StructuredCommunication right) -> bool
+static Hubertech.Belgium.StructuredCommunication.operator ==(Hubertech.Belgium.StructuredCommunication left, Hubertech.Belgium.StructuredCommunication right) -> bool
 ~override Hubertech.Belgium.BelgianValidationError.Equals(object obj) -> bool
 ~override Hubertech.Belgium.BelgianValidationError.ToString() -> string

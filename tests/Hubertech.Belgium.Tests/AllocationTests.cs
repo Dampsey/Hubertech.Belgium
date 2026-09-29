@@ -21,6 +21,20 @@ public sealed class AllocationTests
         }));
     }
 
+    [Fact]
+    public void Structured_communication_parsing_and_formatting_do_not_allocate()
+    {
+        Assert.Equal(0, AllocatedBytes(static () =>
+        {
+            Span<char> destination = stackalloc char[20];
+
+            _ = StructuredCommunication.TryParse("+++123/4567/89002+++".AsSpan(), out var reference, out _);
+            _ = StructuredCommunication.TryParse("+++123/4567/89003+++".AsSpan(), out _, out _);
+            _ = reference.TryFormat(destination, out _, "*");
+            _ = StructuredCommunication.FromNumber(2_026_000_123).TryFormat(destination, out _);
+        }));
+    }
+
     private static long AllocatedBytes(Action action)
     {
         // The first run pays for JIT compilation and static initialization.

@@ -28,6 +28,7 @@ namespace Hubertech.Belgium;
 /// <see cref="IFormatProvider"/> are implemented explicitly and ignore it.
 /// </para>
 /// </remarks>
+/// <seealso href="https://www.ejustice.just.fgov.be/cgi_loi/change_lg.pl?language=nl&amp;la=N&amp;cn=2003062432&amp;table_name=wet">Royal Decree of 24 June 2003 on the composition of the enterprise number (consolidated text)</seealso>
 /// <seealso href="https://news.economie.fgov.be/228779-les-numeros-d-entreprise-passent-au-1/">FPS Economy: enterprise numbers starting with 1</seealso>
 public readonly struct EnterpriseNumber : IEquatable<EnterpriseNumber>, ISpanFormattable, ISpanParsable<EnterpriseNumber>
 {
@@ -242,7 +243,7 @@ public readonly struct EnterpriseNumber : IEquatable<EnterpriseNumber>, ISpanFor
         }
 
         Span<char> digits = stackalloc char[DigitCount];
-        WriteDigits(digits, _value);
+        Digits.Write(digits, _value);
 
         switch (kind)
         {
@@ -343,14 +344,5 @@ public readonly struct EnterpriseNumber : IEquatable<EnterpriseNumber>, ISpanFor
         return kind is 'D' or 'N' or 'V'
             ? kind
             : throw new FormatException($"The format '{format}' is not supported. Supported formats are D, N and V.");
-    }
-
-    private static void WriteDigits(Span<char> destination, uint value)
-    {
-        for (int i = destination.Length - 1; i >= 0; i--)
-        {
-            destination[i] = (char)('0' + (value % 10));
-            value /= 10;
-        }
     }
 }
