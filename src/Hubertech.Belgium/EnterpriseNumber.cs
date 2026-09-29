@@ -242,7 +242,7 @@ public readonly struct EnterpriseNumber : IEquatable<EnterpriseNumber>, ISpanFor
         }
 
         Span<char> digits = stackalloc char[DigitCount];
-        WriteDigits(digits, _value);
+        Digits.Write(digits, _value);
 
         switch (kind)
         {
@@ -343,14 +343,5 @@ public readonly struct EnterpriseNumber : IEquatable<EnterpriseNumber>, ISpanFor
         return kind is 'D' or 'N' or 'V'
             ? kind
             : throw new FormatException($"The format '{format}' is not supported. Supported formats are D, N and V.");
-    }
-
-    private static void WriteDigits(Span<char> destination, uint value)
-    {
-        for (int i = destination.Length - 1; i >= 0; i--)
-        {
-            destination[i] = (char)('0' + (value % 10));
-            value /= 10;
-        }
     }
 }
