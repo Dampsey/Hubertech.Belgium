@@ -11,3 +11,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `BelgianErrorCode`: stable error codes, safe to store or to send to clients.
 - `BelgianValidationError`: why a value is invalid, with a message in English, French or Dutch that can be shown to end users as is.
+- `BelgianFormatException`: a `FormatException` carrying a `BelgianValidationError`.

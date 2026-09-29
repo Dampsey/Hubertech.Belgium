@@ -7,6 +7,9 @@ Hubertech.Belgium.BelgianErrorCode.InvalidCountryCode = 4 -> Hubertech.Belgium.B
 Hubertech.Belgium.BelgianErrorCode.InvalidFirstDigit = 5 -> Hubertech.Belgium.BelgianErrorCode
 Hubertech.Belgium.BelgianErrorCode.InvalidLength = 3 -> Hubertech.Belgium.BelgianErrorCode
 Hubertech.Belgium.BelgianErrorCode.None = 0 -> Hubertech.Belgium.BelgianErrorCode
+Hubertech.Belgium.BelgianFormatException
+Hubertech.Belgium.BelgianFormatException.BelgianFormatException(Hubertech.Belgium.BelgianValidationError error) -> void
+Hubertech.Belgium.BelgianFormatException.Error.get -> Hubertech.Belgium.BelgianValidationError
 Hubertech.Belgium.BelgianValidationError
 Hubertech.Belgium.BelgianValidationError.BelgianValidationError() -> void
 Hubertech.Belgium.BelgianValidationError.Code.get -> Hubertech.Belgium.BelgianErrorCode
