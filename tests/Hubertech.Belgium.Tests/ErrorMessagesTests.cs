@@ -11,7 +11,7 @@ namespace Hubertech.Belgium.Tests;
 /// </summary>
 public sealed class ErrorMessagesTests
 {
-    private static readonly string[] TypeNames = [nameof(EnterpriseNumber), "StructuredCommunication", "BelgianIban"];
+    private static readonly string[] TypeNames = [nameof(EnterpriseNumber), nameof(StructuredCommunication), "BelgianIban"];
 
     public static TheoryData<string> Translations => ["fr", "nl"];
 
