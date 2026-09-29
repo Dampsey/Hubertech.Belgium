@@ -23,4 +23,4 @@ This package validates the **syntax and check digits** of identifiers only. It n
 
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/Dampsey/Hubertech.Belgium/blob/main/LICENSE), by [Dampsey](https://github.com/Dampsey).
