@@ -27,12 +27,18 @@ Option 4. Each parsable type exposes the same members:
 
 | Member | Throws | Purpose |
 | --- | --- | --- |
-| `Parse(string, IFormatProvider?)`, `Parse(ReadOnlySpan<char>, IFormatProvider?)` | `BelgianFormatException` | `IParsable<T>`, `ISpanParsable<T>` |
-| `TryParse(string?, IFormatProvider?, out T)`, `TryParse(ReadOnlySpan<char>, IFormatProvider?, out T)` | never | `IParsable<T>`, `ISpanParsable<T>`; used by ASP.NET Core binding |
+| `Parse(string)`, `Parse(ReadOnlySpan<char>)` | `BelgianFormatException` | parse a value known to be valid |
+| `TryParse(string?, out T)`, `TryParse(ReadOnlySpan<char>, out T)` | never | parse without details; used by ASP.NET Core binding |
 | `TryParse(string?, out T, out BelgianValidationError)`, `TryParse(ReadOnlySpan<char>, out T, out BelgianValidationError)` | never | validation with details |
-| `Validate(string?)` | never | returns the error, or `null` when the value is valid |
+| `Validate(string?)`, `Validate(ReadOnlySpan<char>)` | never | returns the error, or `null` when the value is valid |
 
-The span overload of the detailed `TryParse` was added to the initial design for consistency: every entry point accepts both strings and spans.
+Every entry point accepts both strings and spans; the initial design had no span overload for the detailed `TryParse` nor for `Validate`.
+
+Each type also implements `IParsable<T>` and `ISpanParsable<T>`, so that generic code (`where T : IParsable<T>`) can use it. Their members take an `IFormatProvider`, which Belgian identifiers ignore since they do not depend on culture. These members are therefore implemented explicitly, like the `IFormattable` and `ISpanFormattable` members, instead of being public overloads:
+
+- a public parameter that is always ignored misleads the caller;
+- the code analysis rule CA1305 asks every caller of `Parse(string)` to use the overload that takes an `IFormatProvider` when one exists, which would force a meaningless argument on consumers;
+- optional `provider = null` parameters on several overloads are rejected by the public API analyzer (RS0026, RS0027), because they make overload resolution fragile when the API evolves.
 
 ### `BelgianValidationError` is a `readonly record struct`
 
