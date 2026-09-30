@@ -51,8 +51,12 @@ override Hubertech.Belgium.EnterpriseNumber.ToString() -> string!
 override Hubertech.Belgium.StructuredCommunication.Equals(object? obj) -> bool
 override Hubertech.Belgium.StructuredCommunication.GetHashCode() -> int
 override Hubertech.Belgium.StructuredCommunication.ToString() -> string!
+static Hubertech.Belgium.BelgianIban.FromLegacyAccountNumber(System.ReadOnlySpan<char> accountNumber) -> Hubertech.Belgium.BelgianIban
+static Hubertech.Belgium.BelgianIban.FromLegacyAccountNumber(string! accountNumber) -> Hubertech.Belgium.BelgianIban
 static Hubertech.Belgium.BelgianIban.Parse(System.ReadOnlySpan<char> s) -> Hubertech.Belgium.BelgianIban
 static Hubertech.Belgium.BelgianIban.Parse(string! s) -> Hubertech.Belgium.BelgianIban
+static Hubertech.Belgium.BelgianIban.TryFromLegacyAccountNumber(System.ReadOnlySpan<char> accountNumber, out Hubertech.Belgium.BelgianIban result, out Hubertech.Belgium.BelgianValidationError error) -> bool
+static Hubertech.Belgium.BelgianIban.TryFromLegacyAccountNumber(string? accountNumber, out Hubertech.Belgium.BelgianIban result, out Hubertech.Belgium.BelgianValidationError error) -> bool
 static Hubertech.Belgium.BelgianIban.TryParse(System.ReadOnlySpan<char> s, out Hubertech.Belgium.BelgianIban result) -> bool
 static Hubertech.Belgium.BelgianIban.TryParse(System.ReadOnlySpan<char> s, out Hubertech.Belgium.BelgianIban result, out Hubertech.Belgium.BelgianValidationError error) -> bool
 static Hubertech.Belgium.BelgianIban.TryParse(string? s, out Hubertech.Belgium.BelgianIban result) -> bool

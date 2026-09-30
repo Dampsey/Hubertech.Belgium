@@ -39,6 +39,9 @@ public readonly struct BelgianIban : IEquatable<BelgianIban>, ISpanFormattable, 
     private const int PaperLength = 19;
     private const ulong AccountNumberLimit = 1_000_000_000_000;
 
+    // Errors about a legacy account number talk about an account number, not about an IBAN.
+    private const string LegacyAccountNumberSubject = "BelgianAccountNumber";
+
     // The twelve digits of the Belgian account number; the IBAN check digits derive from them.
     // Zero is the empty value: account number 000-0000000-00 fails the national check.
     private readonly ulong _account;
@@ -231,6 +234,97 @@ public readonly struct BelgianIban : IEquatable<BelgianIban>, ISpanFormattable, 
     /// <returns>The reason why <paramref name="s"/> is not a valid Belgian IBAN, or <see langword="null"/> if it is valid.</returns>
     public static BelgianValidationError? Validate(ReadOnlySpan<char> s) =>
         TryParse(s, out _, out var error) ? null : error;
+
+    /// <summary>
+    /// Converts a Belgian account number in its national notation to the IBAN of that account.
+    /// </summary>
+    /// <param name="accountNumber">The twelve-digit account number, for example <c>539-0075470-34</c>.</param>
+    /// <returns>The IBAN, for example <c>BE68 5390 0754 7034</c>.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="accountNumber"/> is <see langword="null"/>.</exception>
+    /// <exception cref="BelgianFormatException"><paramref name="accountNumber"/> is not a valid Belgian account number.</exception>
+    public static BelgianIban FromLegacyAccountNumber(string accountNumber)
+    {
+        ArgumentNullException.ThrowIfNull(accountNumber);
+
+        return FromLegacyAccountNumber(accountNumber.AsSpan());
+    }
+
+    /// <summary>
+    /// Converts a Belgian account number in its national notation to the IBAN of that account.
+    /// </summary>
+    /// <param name="accountNumber">The twelve-digit account number, for example <c>539-0075470-34</c>.</param>
+    /// <returns>The IBAN, for example <c>BE68 5390 0754 7034</c>.</returns>
+    /// <exception cref="BelgianFormatException"><paramref name="accountNumber"/> is not a valid Belgian account number.</exception>
+    public static BelgianIban FromLegacyAccountNumber(ReadOnlySpan<char> accountNumber) =>
+        TryFromLegacyAccountNumber(accountNumber, out var result, out var error) ? result : throw new BelgianFormatException(error);
+
+    /// <summary>
+    /// Tries to convert a Belgian account number in its national notation to the IBAN of that
+    /// account, and describes why it failed.
+    /// </summary>
+    /// <param name="accountNumber">The account number to convert, for example <c>539-0075470-34</c>.</param>
+    /// <param name="result">The IBAN, or <see langword="default"/> when the conversion fails.</param>
+    /// <param name="error">The reason of the failure, whose message is about the account number, or <see langword="default"/> when the conversion succeeds.</param>
+    /// <returns><see langword="true"/> if <paramref name="accountNumber"/> is a valid Belgian account number; otherwise <see langword="false"/>.</returns>
+    public static bool TryFromLegacyAccountNumber([NotNullWhen(true)] string? accountNumber, out BelgianIban result, out BelgianValidationError error) =>
+        TryFromLegacyAccountNumber(accountNumber.AsSpan(), out result, out error);
+
+    /// <summary>
+    /// Tries to convert a Belgian account number in its national notation to the IBAN of that
+    /// account, and describes why it failed.
+    /// </summary>
+    /// <param name="accountNumber">The account number to convert, for example <c>539-0075470-34</c>.</param>
+    /// <param name="result">The IBAN, or <see langword="default"/> when the conversion fails.</param>
+    /// <param name="error">The reason of the failure, whose message is about the account number, or <see langword="default"/> when the conversion succeeds.</param>
+    /// <returns><see langword="true"/> if <paramref name="accountNumber"/> is a valid Belgian account number; otherwise <see langword="false"/>.</returns>
+    public static bool TryFromLegacyAccountNumber(ReadOnlySpan<char> accountNumber, out BelgianIban result, out BelgianValidationError error)
+    {
+        result = default;
+
+        ulong account = 0;
+        int digitCount = 0;
+        for (int index = 0; index < accountNumber.Length; index++)
+        {
+            char c = accountNumber[index];
+            if (char.IsAsciiDigit(c))
+            {
+                if (digitCount < AccountDigitCount)
+                {
+                    account = (account * 10) + (uint)(c - '0');
+                }
+
+                digitCount++;
+            }
+            else if (!IsSeparator(c))
+            {
+                error = BelgianValidationError.InvalidCharacter(nameof(BelgianIban), index, c).About(LegacyAccountNumberSubject);
+                return false;
+            }
+        }
+
+        if (digitCount == 0)
+        {
+            error = BelgianValidationError.Empty(nameof(BelgianIban)).About(LegacyAccountNumberSubject);
+            return false;
+        }
+
+        if (digitCount != AccountDigitCount)
+        {
+            error = BelgianValidationError.InvalidLength(nameof(BelgianIban)).About(LegacyAccountNumberSubject);
+            return false;
+        }
+
+        uint expectedCheckDigits = Mod97.CheckDigits(account / 100);
+        if (account % 100 != expectedCheckDigits)
+        {
+            error = BelgianValidationError.InvalidChecksum(nameof(BelgianIban), (int)expectedCheckDigits).About(LegacyAccountNumberSubject);
+            return false;
+        }
+
+        result = new BelgianIban(account);
+        error = default;
+        return true;
+    }
 
     /// <summary>
     /// Formats the IBAN in the default, paper format: <c>BE68 5390 0754 7034</c>.

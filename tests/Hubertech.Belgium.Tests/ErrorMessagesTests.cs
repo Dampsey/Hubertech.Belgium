@@ -11,19 +11,22 @@ namespace Hubertech.Belgium.Tests;
 /// </summary>
 public sealed class ErrorMessagesTests
 {
-    private static readonly string[] TypeNames = [nameof(EnterpriseNumber), nameof(StructuredCommunication), nameof(BelgianIban)];
+    // What a message can talk about: a parsed type, or the legacy account number that
+    // BelgianIban.FromLegacyAccountNumber converts.
+    private static readonly string[] Subjects =
+        [nameof(EnterpriseNumber), nameof(StructuredCommunication), nameof(BelgianIban), "BelgianAccountNumber"];
 
     public static TheoryData<string> Translations => ["fr", "nl"];
 
     [Fact]
-    public void Every_key_names_a_parser_and_an_error_code()
+    public void Every_key_names_a_subject_and_an_error_code()
     {
         foreach (string key in ReadMessages(CultureInfo.InvariantCulture).Keys)
         {
             string[] parts = key.Split('_');
 
             Assert.Equal(2, parts.Length);
-            Assert.Contains(parts[0], TypeNames);
+            Assert.Contains(parts[0], Subjects);
             Assert.True(
                 Enum.TryParse(parts[1], out BelgianErrorCode code) && code != BelgianErrorCode.None,
                 $"'{key}' does not end with an error code.");

@@ -33,3 +33,7 @@ Option 1.
 - With `InvariantGlobalization=true`, common in container images, only the invariant culture can be created by default. With `PredefinedCulturesOnly=false`, other cultures can be created but lose their parent chain: `fr-BE` then falls back to English, and only `fr` and `nl` return translated messages. This is a .NET behavior to document for consumers, not something the library can work around.
 - German, the third official language of Belgium, is not supported in v0.1. Adding it means one `.resx` file and one line in the tests; it is on the roadmap.
 - Translations must be reviewed by native speakers before the first release.
+
+## Amendment (2026-09-30)
+
+`BelgianIban.FromLegacyAccountNumber` parses a legacy account number, not an IBAN, so its errors must talk about an account number. A message key is therefore `{Subject}_{Code}`, where the subject is the name of the type that failed, or `BelgianAccountNumber` for a legacy account number. `TypeName` still names the type whose method failed, `BelgianIban`.

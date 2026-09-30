@@ -57,4 +57,16 @@
   <data name="BelgianIban_InvalidChecksum" xml:space="preserve">
     <value>Het IBAN-nummer is ongeldig: de controlecijfers kloppen niet. Controleer of het geen tikfout bevat.</value>
   </data>
+  <data name="BelgianAccountNumber_Empty" xml:space="preserve">
+    <value>Het rekeningnummer is leeg.</value>
+  </data>
+  <data name="BelgianAccountNumber_InvalidCharacter" xml:space="preserve">
+    <value>Het rekeningnummer bevat een ongeldig teken, '{0}', op positie {1}.</value>
+  </data>
+  <data name="BelgianAccountNumber_InvalidLength" xml:space="preserve">
+    <value>Een Belgisch rekeningnummer moet 12 cijfers bevatten.</value>
+  </data>
+  <data name="BelgianAccountNumber_InvalidChecksum" xml:space="preserve">
+    <value>Het rekeningnummer is ongeldig: de controlecijfers kloppen niet. Controleer of het geen tikfout bevat.</value>
+  </data>
 </root>

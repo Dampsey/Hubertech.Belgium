@@ -135,6 +135,63 @@ public sealed class BelgianIbanTests
         Assert.Equal("001", BelgianIban.Parse("BE48 0011 2345 6727").BankCode);
     }
 
+    [Theory]
+    [InlineData("539-0075470-34")]
+    [InlineData("539007547034")]
+    [InlineData(" 539 0075470 34 ")]
+    [InlineData("539.0075470.34")]
+    public void Converts_a_legacy_account_number(string accountNumber)
+    {
+        Assert.Equal(Sample, BelgianIban.FromLegacyAccountNumber(accountNumber));
+        Assert.Equal(Sample, BelgianIban.FromLegacyAccountNumber(accountNumber.AsSpan()));
+    }
+
+    [Theory]
+    [InlineData(null, BelgianErrorCode.Empty, "Le numéro de compte est vide.")]
+    [InlineData("539-0075470-3", BelgianErrorCode.InvalidLength, "Un numéro de compte belge doit comporter 12 chiffres.")]
+    [InlineData("539-0075470-35", BelgianErrorCode.InvalidChecksum, "Le numéro de compte est invalide\u00a0: ses chiffres de contrôle ne correspondent pas. Vérifiez qu'il ne contient pas de faute de frappe.")]
+    [InlineData("539-0075470-3X", BelgianErrorCode.InvalidCharacter, "Le numéro de compte contient un caractère non autorisé, «\u00a0X\u00a0», en position 14.")]
+    public void Rejects_an_invalid_legacy_account_number_with_a_message_about_the_account_number(string? accountNumber, BelgianErrorCode code, string message)
+    {
+        Assert.False(BelgianIban.TryFromLegacyAccountNumber(accountNumber, out var iban, out var error));
+
+        Assert.True(iban.IsEmpty);
+        Assert.Equal(code, error.Code);
+        Assert.Equal(nameof(BelgianIban), error.TypeName);
+        Assert.Equal(message, error.GetMessage(CultureInfo.GetCultureInfo("fr-BE")));
+    }
+
+    [Fact]
+    public void Converting_a_legacy_account_number_exposes_its_expected_check_digits()
+    {
+        Assert.False(BelgianIban.TryFromLegacyAccountNumber("539-0075470-35", out _, out var error));
+
+        Assert.Equal("34", error.Expected);
+    }
+
+    [Fact]
+    public void Converting_an_invalid_legacy_account_number_throws_a_format_exception()
+    {
+        var exception = Assert.Throws<BelgianFormatException>(() => BelgianIban.FromLegacyAccountNumber("539-0075470-35"));
+
+        Assert.Equal(BelgianErrorCode.InvalidChecksum, exception.Error.Code);
+        Assert.Throws<ArgumentNullException>(() => BelgianIban.FromLegacyAccountNumber(null!));
+    }
+
+    [Fact]
+    public void Every_legacy_account_number_error_has_a_message_in_every_language()
+    {
+        foreach (string accountNumber in new[] { "", "539-0075470-3X", "539", "539-0075470-35" })
+        {
+            Assert.False(BelgianIban.TryFromLegacyAccountNumber(accountNumber, out _, out var error));
+
+            foreach (string language in new[] { "en", "fr", "nl" })
+            {
+                Assert.NotEmpty(error.GetMessage(CultureInfo.GetCultureInfo(language)));
+            }
+        }
+    }
+
     [Fact]
     public void Formats_through_the_standard_interfaces()
     {

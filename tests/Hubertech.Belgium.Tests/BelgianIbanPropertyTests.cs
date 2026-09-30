@@ -51,6 +51,18 @@ public sealed class BelgianIbanPropertyTests
     }
 
     [Fact]
+    public void Every_iban_round_trips_through_its_legacy_account_number()
+    {
+        ValidIban.Sample(electronic =>
+        {
+            var iban = BelgianIban.Parse(electronic);
+
+            Assert.Equal(iban, BelgianIban.FromLegacyAccountNumber(iban.AccountNumber));
+            Assert.Equal(electronic.Substring(4, 3), iban.BankCode);
+        });
+    }
+
+    [Fact]
     public void Every_single_digit_typo_is_detected()
     {
         Gen.Select(ValidIban, Gen.Int[2, 15], Gen.Int[1, 9]).Sample((iban, position, shift) =>

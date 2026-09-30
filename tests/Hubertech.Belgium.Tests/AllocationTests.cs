@@ -46,6 +46,8 @@ public sealed class AllocationTests
             _ = BelgianIban.TryParse("BE68539007547035".AsSpan(), out _, out _);
             _ = BelgianIban.TryParse("NL91ABNA0417164300".AsSpan(), out _, out _);
             _ = iban.TryFormat(destination, out _, "P");
+            _ = BelgianIban.TryFromLegacyAccountNumber("539-0075470-34".AsSpan(), out _, out _);
+            _ = BelgianIban.TryFromLegacyAccountNumber("539-0075470-35".AsSpan(), out _, out _);
         }));
     }
 

@@ -26,18 +26,24 @@ public readonly record struct BelgianValidationError
     private readonly char _character;
     private readonly byte? _expectedCheckDigits;
 
+    // What the message talks about, when it is not an instance of the type that failed: a legacy
+    // account number given to BelgianIban.FromLegacyAccountNumber is not an IBAN.
+    private readonly string? _subject;
+
     private BelgianValidationError(
         string typeName,
         BelgianErrorCode code,
         int? position = null,
         char character = default,
-        byte? expectedCheckDigits = null)
+        byte? expectedCheckDigits = null,
+        string? subject = null)
     {
         _typeName = typeName;
         Code = code;
         Position = position;
         _character = character;
         _expectedCheckDigits = expectedCheckDigits;
+        _subject = subject;
     }
 
     /// <summary>
@@ -101,7 +107,7 @@ public readonly record struct BelgianValidationError
             return string.Empty;
         }
 
-        string template = ErrorMessages.GetTemplate(TypeName, Code, culture);
+        string template = ErrorMessages.GetTemplate(_subject ?? TypeName, Code, culture);
 
         return Code == BelgianErrorCode.InvalidCharacter
             ? string.Format(culture, template, DisplayCharacter(_character), Position + 1)
@@ -129,6 +135,13 @@ public readonly record struct BelgianValidationError
 
         return new(typeName, BelgianErrorCode.InvalidChecksum, expectedCheckDigits: (byte)expectedCheckDigits);
     }
+
+    /// <summary>
+    /// Gets a copy of this error whose message is about <paramref name="subject"/> rather than
+    /// about the type that failed.
+    /// </summary>
+    internal BelgianValidationError About(string subject) =>
+        new(TypeName, Code, Position, _character, _expectedCheckDigits, subject);
 
     // Invisible characters (control characters, non-breaking spaces, lone surrogates) would
     // make the message look like it quotes nothing, so they are shown as a code point.
