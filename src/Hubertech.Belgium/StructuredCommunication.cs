@@ -67,7 +67,7 @@ public readonly struct StructuredCommunication : IEquatable<StructuredCommunicat
     {
         ArgumentOutOfRangeException.ThrowIfGreaterThan(value, MaxBaseNumber);
 
-        return new StructuredCommunication((value * 100) + CheckDigits(value));
+        return new StructuredCommunication((value * 100) + Mod97.CheckDigits(value));
     }
 
     /// <summary>
@@ -165,7 +165,7 @@ public readonly struct StructuredCommunication : IEquatable<StructuredCommunicat
             return false;
         }
 
-        ulong expectedCheckDigits = CheckDigits(value / 100);
+        uint expectedCheckDigits = Mod97.CheckDigits(value / 100);
         if (value % 100 != expectedCheckDigits)
         {
             error = BelgianValidationError.InvalidChecksum(nameof(StructuredCommunication), (int)expectedCheckDigits);
@@ -311,14 +311,6 @@ public readonly struct StructuredCommunication : IEquatable<StructuredCommunicat
     /// <inheritdoc/>
     bool ISpanFormattable.TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider) =>
         TryFormat(destination, out charsWritten, format);
-
-    // The check digits are the remainder of the division by 97, except that 0 becomes 97.
-    private static ulong CheckDigits(ulong baseNumber)
-    {
-        ulong remainder = baseNumber % 97;
-
-        return remainder == 0 ? 97 : remainder;
-    }
 
     private static bool IsSeparator(char c) => char.IsWhiteSpace(c) || c is '+' or '*' or '/' or '.' or '-';
 
