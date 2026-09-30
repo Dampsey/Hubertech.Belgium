@@ -10,6 +10,14 @@ Hubertech.Belgium.BelgianErrorCode.None = 0 -> Hubertech.Belgium.BelgianErrorCod
 Hubertech.Belgium.BelgianFormatException
 Hubertech.Belgium.BelgianFormatException.BelgianFormatException(Hubertech.Belgium.BelgianValidationError error) -> void
 Hubertech.Belgium.BelgianFormatException.Error.get -> Hubertech.Belgium.BelgianValidationError
+Hubertech.Belgium.BelgianIban
+Hubertech.Belgium.BelgianIban.AccountNumber.get -> string!
+Hubertech.Belgium.BelgianIban.BankCode.get -> string!
+Hubertech.Belgium.BelgianIban.BelgianIban() -> void
+Hubertech.Belgium.BelgianIban.Equals(Hubertech.Belgium.BelgianIban other) -> bool
+Hubertech.Belgium.BelgianIban.IsEmpty.get -> bool
+Hubertech.Belgium.BelgianIban.ToString(string? format) -> string!
+Hubertech.Belgium.BelgianIban.TryFormat(System.Span<char> destination, out int charsWritten, System.ReadOnlySpan<char> format = default(System.ReadOnlySpan<char>)) -> bool
 Hubertech.Belgium.BelgianValidationError
 Hubertech.Belgium.BelgianValidationError.BelgianValidationError() -> void
 Hubertech.Belgium.BelgianValidationError.Code.get -> Hubertech.Belgium.BelgianErrorCode
@@ -33,6 +41,9 @@ Hubertech.Belgium.StructuredCommunication.StructuredCommunication() -> void
 Hubertech.Belgium.StructuredCommunication.ToString(string? format) -> string!
 Hubertech.Belgium.StructuredCommunication.TryFormat(System.Span<char> destination, out int charsWritten, System.ReadOnlySpan<char> format = default(System.ReadOnlySpan<char>)) -> bool
 const Hubertech.Belgium.StructuredCommunication.MaxBaseNumber = 9999999999 -> ulong
+override Hubertech.Belgium.BelgianIban.Equals(object? obj) -> bool
+override Hubertech.Belgium.BelgianIban.GetHashCode() -> int
+override Hubertech.Belgium.BelgianIban.ToString() -> string!
 override Hubertech.Belgium.BelgianValidationError.GetHashCode() -> int
 override Hubertech.Belgium.EnterpriseNumber.Equals(object? obj) -> bool
 override Hubertech.Belgium.EnterpriseNumber.GetHashCode() -> int
@@ -40,6 +51,16 @@ override Hubertech.Belgium.EnterpriseNumber.ToString() -> string!
 override Hubertech.Belgium.StructuredCommunication.Equals(object? obj) -> bool
 override Hubertech.Belgium.StructuredCommunication.GetHashCode() -> int
 override Hubertech.Belgium.StructuredCommunication.ToString() -> string!
+static Hubertech.Belgium.BelgianIban.Parse(System.ReadOnlySpan<char> s) -> Hubertech.Belgium.BelgianIban
+static Hubertech.Belgium.BelgianIban.Parse(string! s) -> Hubertech.Belgium.BelgianIban
+static Hubertech.Belgium.BelgianIban.TryParse(System.ReadOnlySpan<char> s, out Hubertech.Belgium.BelgianIban result) -> bool
+static Hubertech.Belgium.BelgianIban.TryParse(System.ReadOnlySpan<char> s, out Hubertech.Belgium.BelgianIban result, out Hubertech.Belgium.BelgianValidationError error) -> bool
+static Hubertech.Belgium.BelgianIban.TryParse(string? s, out Hubertech.Belgium.BelgianIban result) -> bool
+static Hubertech.Belgium.BelgianIban.TryParse(string? s, out Hubertech.Belgium.BelgianIban result, out Hubertech.Belgium.BelgianValidationError error) -> bool
+static Hubertech.Belgium.BelgianIban.Validate(System.ReadOnlySpan<char> s) -> Hubertech.Belgium.BelgianValidationError?
+static Hubertech.Belgium.BelgianIban.Validate(string? s) -> Hubertech.Belgium.BelgianValidationError?
+static Hubertech.Belgium.BelgianIban.operator !=(Hubertech.Belgium.BelgianIban left, Hubertech.Belgium.BelgianIban right) -> bool
+static Hubertech.Belgium.BelgianIban.operator ==(Hubertech.Belgium.BelgianIban left, Hubertech.Belgium.BelgianIban right) -> bool
 static Hubertech.Belgium.BelgianValidationError.operator !=(Hubertech.Belgium.BelgianValidationError left, Hubertech.Belgium.BelgianValidationError right) -> bool
 static Hubertech.Belgium.BelgianValidationError.operator ==(Hubertech.Belgium.BelgianValidationError left, Hubertech.Belgium.BelgianValidationError right) -> bool
 static Hubertech.Belgium.EnterpriseNumber.Parse(System.ReadOnlySpan<char> s) -> Hubertech.Belgium.EnterpriseNumber
