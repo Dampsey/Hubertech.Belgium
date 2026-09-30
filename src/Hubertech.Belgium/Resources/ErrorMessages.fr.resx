@@ -57,4 +57,16 @@
   <data name="BelgianIban_InvalidChecksum" xml:space="preserve">
     <value>L'IBAN est invalide&#160;: ses chiffres de contrôle ne correspondent pas. Vérifiez qu'il ne contient pas de faute de frappe.</value>
   </data>
+  <data name="BelgianAccountNumber_Empty" xml:space="preserve">
+    <value>Le numéro de compte est vide.</value>
+  </data>
+  <data name="BelgianAccountNumber_InvalidCharacter" xml:space="preserve">
+    <value>Le numéro de compte contient un caractère non autorisé, «&#160;{0}&#160;», en position {1}.</value>
+  </data>
+  <data name="BelgianAccountNumber_InvalidLength" xml:space="preserve">
+    <value>Un numéro de compte belge doit comporter 12 chiffres.</value>
+  </data>
+  <data name="BelgianAccountNumber_InvalidChecksum" xml:space="preserve">
+    <value>Le numéro de compte est invalide&#160;: ses chiffres de contrôle ne correspondent pas. Vérifiez qu'il ne contient pas de faute de frappe.</value>
+  </data>
 </root>

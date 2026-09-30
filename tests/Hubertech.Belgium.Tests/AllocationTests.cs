@@ -35,6 +35,22 @@ public sealed class AllocationTests
         }));
     }
 
+    [Fact]
+    public void Belgian_iban_parsing_and_formatting_do_not_allocate()
+    {
+        Assert.Equal(0, AllocatedBytes(static () =>
+        {
+            Span<char> destination = stackalloc char[19];
+
+            _ = BelgianIban.TryParse("BE68 5390 0754 7034".AsSpan(), out var iban, out _);
+            _ = BelgianIban.TryParse("BE68539007547035".AsSpan(), out _, out _);
+            _ = BelgianIban.TryParse("NL91ABNA0417164300".AsSpan(), out _, out _);
+            _ = iban.TryFormat(destination, out _, "P");
+            _ = BelgianIban.TryFromLegacyAccountNumber("539-0075470-34".AsSpan(), out _, out _);
+            _ = BelgianIban.TryFromLegacyAccountNumber("539-0075470-35".AsSpan(), out _, out _);
+        }));
+    }
+
     private static long AllocatedBytes(Action action)
     {
         // The first run pays for JIT compilation and static initialization.
