@@ -117,9 +117,9 @@ public readonly struct EnterpriseNumber : IEquatable<EnterpriseNumber>, ISpanFor
             return false;
         }
 
-        if (StartsWithCountryCode(s, index))
+        if (CountryCode.StartsAt(s, index))
         {
-            if (!s.Slice(index, 2).Equals("BE", StringComparison.OrdinalIgnoreCase))
+            if (!CountryCode.IsBelgium(s, index))
             {
                 error = BelgianValidationError.InvalidCountryCode(nameof(EnterpriseNumber));
                 return false;
@@ -324,13 +324,6 @@ public readonly struct EnterpriseNumber : IEquatable<EnterpriseNumber>, ISpanFor
 
         return index;
     }
-
-    // A country code is exactly two letters: "BE0202239951" has one, "TVA BE0202239951" does not.
-    private static bool StartsWithCountryCode(ReadOnlySpan<char> s, int index) =>
-        index + 1 < s.Length
-        && char.IsAsciiLetter(s[index])
-        && char.IsAsciiLetter(s[index + 1])
-        && (index + 2 == s.Length || !char.IsAsciiLetter(s[index + 2]));
 
     private static char GetFormatKind(ReadOnlySpan<char> format)
     {
