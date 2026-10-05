@@ -1,5 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <!-- Published with Native AOT, to show that the library and its integrations need no reflection. -->
+  <PropertyGroup>
+    <PublishAot>true</PublishAot>
+    <!-- Unlike the AOT web API template: the messages are localized, which needs culture data. -->
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\Hubertech.Belgium\Hubertech.Belgium.csproj" />
   </ItemGroup>

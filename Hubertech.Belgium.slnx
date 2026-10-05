@@ -9,6 +9,7 @@
     <Project Path="src/Hubertech.Belgium/Hubertech.Belgium.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Hubertech.Belgium.Samples.Api.Tests/Hubertech.Belgium.Samples.Api.Tests.csproj" />
     <Project Path="tests/Hubertech.Belgium.Tests/Hubertech.Belgium.Tests.csproj" />
   </Folder>
 </Solution>
