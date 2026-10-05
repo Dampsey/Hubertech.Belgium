@@ -1,11 +1,12 @@
 namespace Hubertech.Belgium;
 
 /// <summary>
-/// Belgian holidays.
+/// Belgian holidays and business days.
 /// </summary>
 /// <remarks>
 /// <para>
-/// By default, only the ten legal holidays are taken into account.
+/// A business day is a Monday to Friday that is not a holiday of the requested
+/// <see cref="HolidaySet"/>. By default, only the ten legal holidays are taken into account.
 /// Moveable holidays are computed from Easter Sunday, itself computed with the anonymous
 /// Gregorian algorithm (Meeus, Jones, Butcher); there is no table of dates.
 /// </para>
@@ -99,6 +100,78 @@ public static class BelgianCalendar
     }
 
     /// <summary>
+    /// Determines whether a date is a business day: a Monday to Friday that is not a holiday.
+    /// </summary>
+    /// <param name="date">The date.</param>
+    /// <param name="set">The holidays to take into account. Only the legal holidays by default.</param>
+    /// <returns><see langword="true"/> if <paramref name="date"/> is a business day; otherwise <see langword="false"/>.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="set"/> contains an unknown value.</exception>
+    public static bool IsBusinessDay(DateOnly date, HolidaySet set = HolidaySet.Legal)
+    {
+        ValidateSet(set);
+
+        return IsBusinessDayCore(date, set);
+    }
+
+    /// <summary>
+    /// Moves a date by a number of business days.
+    /// </summary>
+    /// <param name="date">The starting date, which does not need to be a business day.</param>
+    /// <param name="days">The number of business days to move: forward when positive, backward when negative.</param>
+    /// <param name="set">The holidays to take into account. Only the legal holidays by default.</param>
+    /// <returns>
+    /// The <paramref name="days"/>-th business day after <paramref name="date"/> (before it when
+    /// <paramref name="days"/> is negative), not counting <paramref name="date"/> itself; or
+    /// <paramref name="date"/> unchanged when <paramref name="days"/> is 0.
+    /// </returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="set"/> contains an unknown value, or the result is outside the range of <see cref="DateOnly"/>.</exception>
+    public static DateOnly AddBusinessDays(DateOnly date, int days, HolidaySet set = HolidaySet.Legal)
+    {
+        ValidateSet(set);
+
+        int step = Math.Sign(days);
+        while (days != 0)
+        {
+            date = date.AddDays(step);
+            if (IsBusinessDayCore(date, set))
+            {
+                days -= step;
+            }
+        }
+
+        return date;
+    }
+
+    /// <summary>
+    /// Counts the business days after <paramref name="start"/>, up to and including
+    /// <paramref name="end"/>.
+    /// </summary>
+    /// <param name="start">The starting date, which is not counted.</param>
+    /// <param name="end">The ending date, which is counted when it is a business day.</param>
+    /// <param name="set">The holidays to take into account. Only the legal holidays by default.</param>
+    /// <returns>
+    /// The number of business days from <paramref name="start"/>, excluded, to
+    /// <paramref name="end"/>, included: the business days in (<paramref name="start"/>,
+    /// <paramref name="end"/>] when <paramref name="end"/> is after <paramref name="start"/>, and
+    /// the opposite of the number of business days in [<paramref name="end"/>,
+    /// <paramref name="start"/>) when it is before. It is the number of business days that
+    /// <see cref="AddBusinessDays(DateOnly, int, HolidaySet)"/> moves to go from
+    /// <paramref name="start"/> to <paramref name="end"/>, when <paramref name="end"/> is a business
+    /// day. From a Friday to the next Monday, it is 1; from a Saturday to the previous Friday, -1;
+    /// from a date to itself, 0.
+    /// </returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="set"/> contains an unknown value.</exception>
+    public static int CountBusinessDays(DateOnly start, DateOnly end, HolidaySet set = HolidaySet.Legal)
+    {
+        ValidateSet(set);
+
+        // The start is never counted and the end always is, whatever the direction.
+        return end >= start
+            ? CountBusinessDaysIn(start.DayNumber + 1, end.DayNumber, set)
+            : -CountBusinessDaysIn(end.DayNumber, start.DayNumber - 1, set);
+    }
+
+    /// <summary>
     /// Computes Easter Sunday in the Gregorian calendar with the anonymous algorithm published
     /// by Meeus, Jones and Butcher.
     /// </summary>
@@ -121,6 +194,23 @@ public static class BelgianCalendar
 
         return new DateOnly(year, month, day);
     }
+
+    private static int CountBusinessDaysIn(int firstDayNumber, int lastDayNumber, HolidaySet set)
+    {
+        int count = 0;
+        for (int dayNumber = firstDayNumber; dayNumber <= lastDayNumber; dayNumber++)
+        {
+            if (IsBusinessDayCore(DateOnly.FromDayNumber(dayNumber), set))
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private static bool IsBusinessDayCore(DateOnly date, HolidaySet set) =>
+        date.DayOfWeek is not (DayOfWeek.Saturday or DayOfWeek.Sunday) && !IsHolidayCore(date, set);
 
     private static bool IsHolidayCore(DateOnly date, HolidaySet set)
     {

@@ -85,7 +85,10 @@ override Hubertech.Belgium.EnterpriseNumber.ToString() -> string!
 override Hubertech.Belgium.StructuredCommunication.Equals(object? obj) -> bool
 override Hubertech.Belgium.StructuredCommunication.GetHashCode() -> int
 override Hubertech.Belgium.StructuredCommunication.ToString() -> string!
+static Hubertech.Belgium.BelgianCalendar.AddBusinessDays(System.DateOnly date, int days, Hubertech.Belgium.HolidaySet set = Hubertech.Belgium.HolidaySet.Legal) -> System.DateOnly
+static Hubertech.Belgium.BelgianCalendar.CountBusinessDays(System.DateOnly start, System.DateOnly end, Hubertech.Belgium.HolidaySet set = Hubertech.Belgium.HolidaySet.Legal) -> int
 static Hubertech.Belgium.BelgianCalendar.GetHolidays(int year, Hubertech.Belgium.HolidaySet set = Hubertech.Belgium.HolidaySet.Legal) -> System.Collections.Generic.IReadOnlyList<Hubertech.Belgium.BelgianHoliday>!
+static Hubertech.Belgium.BelgianCalendar.IsBusinessDay(System.DateOnly date, Hubertech.Belgium.HolidaySet set = Hubertech.Belgium.HolidaySet.Legal) -> bool
 static Hubertech.Belgium.BelgianCalendar.IsHoliday(System.DateOnly date, Hubertech.Belgium.HolidaySet set = Hubertech.Belgium.HolidaySet.Legal) -> bool
 static Hubertech.Belgium.BelgianHoliday.operator !=(Hubertech.Belgium.BelgianHoliday left, Hubertech.Belgium.BelgianHoliday right) -> bool
 static Hubertech.Belgium.BelgianHoliday.operator ==(Hubertech.Belgium.BelgianHoliday left, Hubertech.Belgium.BelgianHoliday right) -> bool

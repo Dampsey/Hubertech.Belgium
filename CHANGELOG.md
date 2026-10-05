@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `BelgianIban`: the Belgian IBAN. Accepts separators and the BE prefix in any case, rejects other countries, checks both the ISO 7064 IBAN check digits and the Belgian account number check digits, exposes `BankCode` and `AccountNumber`, and formats as `BE68 5390 0754 7034` or `BE68539007547034`.
 - `BelgianIban.FromLegacyAccountNumber`: converts a Belgian account number in its national notation, `539-0075470-34`, to its IBAN; `TryFromLegacyAccountNumber` reports errors that talk about the account number.
 - `BelgianCalendar.GetHolidays` and `IsHoliday`: the ten Belgian legal holidays, with Easter computed rather than tabulated, and the optional days off of the communities and of the federal public services (`HolidaySet`), with names in English, French and Dutch.
+- `BelgianCalendar.IsBusinessDay`, `AddBusinessDays` and `CountBusinessDays`: business day arithmetic that skips weekends and the requested holidays; counting excludes the start and includes the end, so that it is the inverse of `AddBusinessDays`.
 - `BelgianErrorCode`: stable error codes, safe to store or to send to clients.
 - `BelgianValidationError`: why a value is invalid, with a message in English, French or Dutch that can be shown to end users as is.
 - `BelgianFormatException`: a `FormatException` carrying a `BelgianValidationError`.

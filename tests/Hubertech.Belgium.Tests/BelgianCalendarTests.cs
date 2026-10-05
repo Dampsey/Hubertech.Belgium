@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Hubertech.Belgium.Tests;
 
 public sealed class BelgianCalendarTests
@@ -85,6 +87,7 @@ public sealed class BelgianCalendarTests
     {
         Assert.Empty(BelgianCalendar.GetHolidays(2026, HolidaySet.None));
         Assert.False(BelgianCalendar.IsHoliday(new DateOnly(2026, 1, 1), HolidaySet.None));
+        Assert.True(BelgianCalendar.IsBusinessDay(new DateOnly(2026, 1, 1), HolidaySet.None));
     }
 
     [Theory]
@@ -97,6 +100,54 @@ public sealed class BelgianCalendarTests
     public void Recognizes_legal_holidays_even_on_weekends(int year, int month, int day, bool expected)
     {
         Assert.Equal(expected, BelgianCalendar.IsHoliday(new DateOnly(year, month, day)));
+    }
+
+    [Theory]
+    [InlineData(2026, 4, 3, true)]
+    [InlineData(2026, 4, 4, false)]
+    [InlineData(2026, 4, 5, false)]
+    [InlineData(2026, 4, 6, false)]
+    [InlineData(2026, 4, 7, true)]
+    public void Business_days_are_weekdays_that_are_not_holidays(int year, int month, int day, bool expected)
+    {
+        Assert.Equal(expected, BelgianCalendar.IsBusinessDay(new DateOnly(year, month, day)));
+    }
+
+    [Theory]
+    [InlineData("2026-04-02", 2, "2026-04-07")]
+    [InlineData("2026-04-07", -1, "2026-04-03")]
+    [InlineData("2026-04-04", 1, "2026-04-07")]
+    [InlineData("2026-12-24", 1, "2026-12-28")]
+    [InlineData("2026-05-13", 1, "2026-05-15")]
+    [InlineData("2026-04-04", 0, "2026-04-04")]
+    public void Adds_business_days_skipping_weekends_and_holidays(string start, int days, string expected)
+    {
+        Assert.Equal(Date(expected), BelgianCalendar.AddBusinessDays(Date(start), days));
+    }
+
+    [Fact]
+    public void Adds_business_days_with_the_requested_holidays()
+    {
+        // 2 November 2026 is a Monday, off for the federal public services only.
+        var friday = new DateOnly(2026, 10, 30);
+
+        Assert.Equal(new DateOnly(2026, 11, 2), BelgianCalendar.AddBusinessDays(friday, 1));
+        Assert.Equal(new DateOnly(2026, 11, 3), BelgianCalendar.AddBusinessDays(friday, 1, HolidaySet.Legal | HolidaySet.FederalPublicService));
+    }
+
+    [Theory]
+    [InlineData("2026-04-07", "2026-04-07", 0)]
+    [InlineData("2026-04-03", "2026-04-07", 1)]
+    [InlineData("2026-04-07", "2026-04-03", -1)]
+    [InlineData("2026-04-04", "2026-04-05", 0)]
+    [InlineData("2026-04-03", "2026-04-06", 0)]
+    [InlineData("2026-04-06", "2026-04-07", 1)]
+    [InlineData("2026-04-04", "2026-04-03", -1)]
+    [InlineData("2026-04-03", "2026-04-04", 0)]
+    [InlineData("2025-12-31", "2026-12-31", 253)]
+    public void Counts_business_days_after_the_start_up_to_and_including_the_end(string start, string end, int expected)
+    {
+        Assert.Equal(expected, BelgianCalendar.CountBusinessDays(Date(start), Date(end)));
     }
 
     [Theory]
@@ -115,6 +166,9 @@ public sealed class BelgianCalendarTests
 
         Assert.Throws<ArgumentOutOfRangeException>(() => BelgianCalendar.GetHolidays(2026, unknown));
         Assert.Throws<ArgumentOutOfRangeException>(() => BelgianCalendar.IsHoliday(date, unknown));
+        Assert.Throws<ArgumentOutOfRangeException>(() => BelgianCalendar.IsBusinessDay(date, unknown));
+        Assert.Throws<ArgumentOutOfRangeException>(() => BelgianCalendar.AddBusinessDays(date, 1, unknown));
+        Assert.Throws<ArgumentOutOfRangeException>(() => BelgianCalendar.CountBusinessDays(date, date, unknown));
     }
 
     [Fact]
@@ -123,4 +177,6 @@ public sealed class BelgianCalendarTests
         Assert.Equal(10, BelgianCalendar.GetHolidays(9999).Count);
         Assert.Equal(10, BelgianCalendar.GetHolidays(1).Count);
     }
+
+    private static DateOnly Date(string isoDate) => DateOnly.ParseExact(isoDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 }
