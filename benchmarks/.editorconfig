@@ -1,0 +1,4 @@
+[*.cs]
+
+# Benchmark classes and methods are public for BenchmarkDotNet, not for consumers.
+dotnet_diagnostic.CS1591.severity = none
