@@ -1,6 +1,6 @@
 # Architecture decision records
 
-Each structuring decision is recorded in a short document: context, options considered, decision, consequences. Records are numbered and never renumbered; a decision that changes is superseded by a new record, not edited.
+Each structuring decision is recorded in a short document: context, options considered, decision, consequences. Records are numbered and never renumbered, and their text is never rewritten: a decision that is reversed is superseded by a new record, whereas a decision that stands but needs a precision gets a dated amendment appended at the end.
 
 | # | Title | Status |
 | --- | --- | --- |
