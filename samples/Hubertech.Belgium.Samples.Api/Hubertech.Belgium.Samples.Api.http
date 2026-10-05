@@ -1,0 +1,46 @@
+# Requests to try the sample by hand: run it with `dotnet run`, then send them from
+# Visual Studio, Rider or Visual Studio Code with the REST Client extension.
+
+@host = http://localhost:5000
+
+### A valid invoice: the identifiers come back without presentation characters.
+POST {{host}}/invoices
+Content-Type: application/json
+
+{
+  "supplier": "BE 0202.239.951",
+  "account": "BE68 5390 0754 7034",
+  "reference": "+++123/4567/89002+++"
+}
+
+### Three invalid fields, reported at once with their codes, in French.
+POST {{host}}/invoices
+Content-Type: application/json
+Accept-Language: fr-BE
+
+{
+  "supplier": "0202.239.952",
+  "account": "NL91 ABNA 0417 1643 00"
+}
+
+### The same, in Dutch.
+POST {{host}}/invoices
+Content-Type: application/json
+Accept-Language: nl-BE
+
+{
+  "supplier": "0202.239.952",
+  "account": "NL91 ABNA 0417 1643 00"
+}
+
+### An enterprise number bound from the route.
+GET {{host}}/enterprise-numbers/BE0202239951
+
+### An invalid enterprise number in the route: a plain 400, without the reason.
+GET {{host}}/enterprise-numbers/0202.239.952
+
+### Two business days after Thursday 2 April 2026: Easter Monday is skipped.
+GET {{host}}/business-days?from=2026-04-02&days=2
+
+### Ten business days before 5 January 2026.
+GET {{host}}/business-days?from=2026-01-05&days=-10

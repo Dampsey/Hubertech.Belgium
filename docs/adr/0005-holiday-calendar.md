@@ -39,3 +39,7 @@ Option 2.
 - `CountBusinessDays(a, b)` is not the opposite of `CountBusinessDays(b, a)` when one of the bounds is not a business day: the sum of both is 1, -1 or 0 depending on which bound is a business day. This is documented and tested.
 - `IsHoliday`, `IsBusinessDay`, `AddBusinessDays` and `CountBusinessDays` do not allocate. Counting is linear in the number of days, which is enough for the ranges of invoices and deadlines; the benchmarks of phase 7 will tell whether larger ranges need better.
 - A change in the law, such as a new legal holiday, needs a new version of the package.
+
+## Amendment (2026-10-05)
+
+The benchmarks measure about 50 ns per calendar day for `AddBusinessDays` and `CountBusinessDays`, on a shared cloud virtual machine: about 2 µs for a month, 20 µs for a year, 2 ms for a century. Counting stays linear, since payment terms and deadlines span days to months. Counting year by year, from the holidays of each year, would make long ranges cheap if a use case needs it.
