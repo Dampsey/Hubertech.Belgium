@@ -1,3 +1,7 @@
+using System.Buffers;
+using System.Text.Json;
+using Hubertech.Belgium.Serialization;
+
 namespace Hubertech.Belgium.Tests;
 
 /// <summary>
@@ -63,6 +67,26 @@ public sealed class AllocationTests
             _ = BelgianCalendar.IsBusinessDay(start, set);
             _ = BelgianCalendar.AddBusinessDays(start, 20, set);
             _ = BelgianCalendar.CountBusinessDays(start, new DateOnly(2026, 5, 29), set);
+        }));
+    }
+
+    [Fact]
+    public void Json_conversion_does_not_allocate()
+    {
+        var converter = new BelgianIbanJsonConverter();
+        var output = new ArrayBufferWriter<byte>(64);
+        using var writer = new Utf8JsonWriter(output);
+
+        Assert.Equal(0, AllocatedBytes(() =>
+        {
+            var reader = new Utf8JsonReader("\"BE68 5390 0754 7034\""u8);
+            reader.Read();
+            var iban = converter.Read(ref reader, typeof(BelgianIban), JsonSerializerOptions.Default);
+
+            output.ResetWrittenCount();
+            writer.Reset();
+            converter.Write(writer, iban, JsonSerializerOptions.Default);
+            writer.Flush();
         }));
     }
 
