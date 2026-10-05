@@ -66,6 +66,12 @@ Hubertech.Belgium.HolidaySet.FrenchCommunity = 4 -> Hubertech.Belgium.HolidaySet
 Hubertech.Belgium.HolidaySet.GermanSpeakingCommunity = 8 -> Hubertech.Belgium.HolidaySet
 Hubertech.Belgium.HolidaySet.Legal = 1 -> Hubertech.Belgium.HolidaySet
 Hubertech.Belgium.HolidaySet.None = 0 -> Hubertech.Belgium.HolidaySet
+Hubertech.Belgium.Serialization.BelgianIbanJsonConverter
+Hubertech.Belgium.Serialization.BelgianIbanJsonConverter.BelgianIbanJsonConverter() -> void
+Hubertech.Belgium.Serialization.EnterpriseNumberJsonConverter
+Hubertech.Belgium.Serialization.EnterpriseNumberJsonConverter.EnterpriseNumberJsonConverter() -> void
+Hubertech.Belgium.Serialization.StructuredCommunicationJsonConverter
+Hubertech.Belgium.Serialization.StructuredCommunicationJsonConverter.StructuredCommunicationJsonConverter() -> void
 Hubertech.Belgium.StructuredCommunication
 Hubertech.Belgium.StructuredCommunication.BaseNumber.get -> ulong
 Hubertech.Belgium.StructuredCommunication.Equals(Hubertech.Belgium.StructuredCommunication other) -> bool
@@ -82,6 +88,18 @@ override Hubertech.Belgium.BelgianValidationError.GetHashCode() -> int
 override Hubertech.Belgium.EnterpriseNumber.Equals(object? obj) -> bool
 override Hubertech.Belgium.EnterpriseNumber.GetHashCode() -> int
 override Hubertech.Belgium.EnterpriseNumber.ToString() -> string!
+override Hubertech.Belgium.Serialization.BelgianIbanJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Hubertech.Belgium.BelgianIban
+override Hubertech.Belgium.Serialization.BelgianIbanJsonConverter.ReadAsPropertyName(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Hubertech.Belgium.BelgianIban
+override Hubertech.Belgium.Serialization.BelgianIbanJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Hubertech.Belgium.BelgianIban value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Hubertech.Belgium.Serialization.BelgianIbanJsonConverter.WriteAsPropertyName(System.Text.Json.Utf8JsonWriter! writer, Hubertech.Belgium.BelgianIban value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Hubertech.Belgium.Serialization.EnterpriseNumberJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Hubertech.Belgium.EnterpriseNumber
+override Hubertech.Belgium.Serialization.EnterpriseNumberJsonConverter.ReadAsPropertyName(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Hubertech.Belgium.EnterpriseNumber
+override Hubertech.Belgium.Serialization.EnterpriseNumberJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Hubertech.Belgium.EnterpriseNumber value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Hubertech.Belgium.Serialization.EnterpriseNumberJsonConverter.WriteAsPropertyName(System.Text.Json.Utf8JsonWriter! writer, Hubertech.Belgium.EnterpriseNumber value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Hubertech.Belgium.Serialization.StructuredCommunicationJsonConverter.Read(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Hubertech.Belgium.StructuredCommunication
+override Hubertech.Belgium.Serialization.StructuredCommunicationJsonConverter.ReadAsPropertyName(ref System.Text.Json.Utf8JsonReader reader, System.Type! typeToConvert, System.Text.Json.JsonSerializerOptions! options) -> Hubertech.Belgium.StructuredCommunication
+override Hubertech.Belgium.Serialization.StructuredCommunicationJsonConverter.Write(System.Text.Json.Utf8JsonWriter! writer, Hubertech.Belgium.StructuredCommunication value, System.Text.Json.JsonSerializerOptions! options) -> void
+override Hubertech.Belgium.Serialization.StructuredCommunicationJsonConverter.WriteAsPropertyName(System.Text.Json.Utf8JsonWriter! writer, Hubertech.Belgium.StructuredCommunication value, System.Text.Json.JsonSerializerOptions! options) -> void
 override Hubertech.Belgium.StructuredCommunication.Equals(object? obj) -> bool
 override Hubertech.Belgium.StructuredCommunication.GetHashCode() -> int
 override Hubertech.Belgium.StructuredCommunication.ToString() -> string!

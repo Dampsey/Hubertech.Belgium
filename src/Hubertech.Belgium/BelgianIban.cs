@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
+using Hubertech.Belgium.Serialization;
 
 namespace Hubertech.Belgium;
 
@@ -28,10 +30,14 @@ namespace Hubertech.Belgium;
 /// <see cref="ISpanParsable{TSelf}"/> and <see cref="ISpanFormattable"/> that take an
 /// <see cref="IFormatProvider"/> are implemented explicitly and ignore it.
 /// </para>
+/// <para>
+/// In JSON, the value is a string, converted by <see cref="BelgianIbanJsonConverter"/>.
+/// </para>
 /// </remarks>
 /// <seealso href="https://www.swift.com/standards/data-standards/iban-international-bank-account-number">SWIFT: IBAN registry</seealso>
 /// <seealso href="https://www.nbb.be/en/payment-systems/payment-standards/bank-identification-codes">National Bank of Belgium: bank identification codes</seealso>
-public readonly struct BelgianIban : IEquatable<BelgianIban>, ISpanFormattable, ISpanParsable<BelgianIban>
+[JsonConverter(typeof(BelgianIbanJsonConverter))]
+public readonly struct BelgianIban : IEquatable<BelgianIban>, ISpanFormattable, ISpanParsable<BelgianIban>, IBelgianIdentifier<BelgianIban>
 {
     private const int DigitCount = 14;
     private const int AccountDigitCount = 12;

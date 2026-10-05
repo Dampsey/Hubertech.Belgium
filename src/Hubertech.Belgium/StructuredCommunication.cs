@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
+using Hubertech.Belgium.Serialization;
 
 namespace Hubertech.Belgium;
 
@@ -28,9 +30,13 @@ namespace Hubertech.Belgium;
 /// <see cref="ISpanFormattable"/> that take an <see cref="IFormatProvider"/> are implemented
 /// explicitly and ignore it.
 /// </para>
+/// <para>
+/// In JSON, the value is a string, converted by <see cref="StructuredCommunicationJsonConverter"/>.
+/// </para>
 /// </remarks>
 /// <seealso href="https://febelfin.be/en/publications/2023/febelfin-banking-standards-for-online-banking">Febelfin banking standards for online banking</seealso>
-public readonly struct StructuredCommunication : IEquatable<StructuredCommunication>, ISpanFormattable, ISpanParsable<StructuredCommunication>
+[JsonConverter(typeof(StructuredCommunicationJsonConverter))]
+public readonly struct StructuredCommunication : IEquatable<StructuredCommunication>, ISpanFormattable, ISpanParsable<StructuredCommunication>, IBelgianIdentifier<StructuredCommunication>
 {
     /// <summary>
     /// The largest number that <see cref="FromNumber(ulong)"/> accepts: ten digits.
