@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-05
+
+First release.
+
 ### Added
 
 - `EnterpriseNumber`: the Belgian enterprise number (BCE/KBO). Accepts separators, the BE prefix and legacy nine-digit numbers, checks the first digit and the mod 97 check digits, and formats as `0202.239.951`, `0202239951` or `BE0202239951`.
@@ -20,3 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `BelgianErrorCode`: stable error codes, safe to store or to send to clients.
 - `BelgianValidationError`: why a value is invalid, with a message in English, French or Dutch that can be shown to end users as is.
 - `BelgianFormatException`: a `FormatException` carrying a `BelgianValidationError`.
+
+[Unreleased]: https://github.com/Dampsey/Hubertech.Belgium/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/Dampsey/Hubertech.Belgium/releases/tag/v0.1.0
