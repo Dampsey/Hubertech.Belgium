@@ -23,6 +23,8 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <EnablePackageValidation>true</EnablePackageValidation>
+    <!-- The latest published version: packing reports the breaking changes against it (see docs/adr/0001-versioning-strategy.md). -->
+    <PackageValidationBaselineVersion>0.1.0</PackageValidationBaselineVersion>
   </PropertyGroup>
 
   <!-- Localization (see docs/adr/0003-localization-strategy.md). -->
