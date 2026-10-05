@@ -1,5 +1,7 @@
 #nullable enable
 Hubertech.Belgium.BelgianCalendar
+Hubertech.Belgium.BelgianEnterpriseNumberAttribute
+Hubertech.Belgium.BelgianEnterpriseNumberAttribute.BelgianEnterpriseNumberAttribute() -> void
 Hubertech.Belgium.BelgianErrorCode
 Hubertech.Belgium.BelgianErrorCode.Empty = 1 -> Hubertech.Belgium.BelgianErrorCode
 Hubertech.Belgium.BelgianErrorCode.InvalidCharacter = 2 -> Hubertech.Belgium.BelgianErrorCode
@@ -26,6 +28,10 @@ Hubertech.Belgium.BelgianIban.Equals(Hubertech.Belgium.BelgianIban other) -> boo
 Hubertech.Belgium.BelgianIban.IsEmpty.get -> bool
 Hubertech.Belgium.BelgianIban.ToString(string? format) -> string!
 Hubertech.Belgium.BelgianIban.TryFormat(System.Span<char> destination, out int charsWritten, System.ReadOnlySpan<char> format = default(System.ReadOnlySpan<char>)) -> bool
+Hubertech.Belgium.BelgianIbanAttribute
+Hubertech.Belgium.BelgianIbanAttribute.BelgianIbanAttribute() -> void
+Hubertech.Belgium.BelgianStructuredCommunicationAttribute
+Hubertech.Belgium.BelgianStructuredCommunicationAttribute.BelgianStructuredCommunicationAttribute() -> void
 Hubertech.Belgium.BelgianValidationError
 Hubertech.Belgium.BelgianValidationError.BelgianValidationError() -> void
 Hubertech.Belgium.BelgianValidationError.Code.get -> Hubertech.Belgium.BelgianErrorCode
@@ -80,10 +86,13 @@ Hubertech.Belgium.StructuredCommunication.StructuredCommunication() -> void
 Hubertech.Belgium.StructuredCommunication.ToString(string? format) -> string!
 Hubertech.Belgium.StructuredCommunication.TryFormat(System.Span<char> destination, out int charsWritten, System.ReadOnlySpan<char> format = default(System.ReadOnlySpan<char>)) -> bool
 const Hubertech.Belgium.StructuredCommunication.MaxBaseNumber = 9999999999 -> ulong
+override Hubertech.Belgium.BelgianEnterpriseNumberAttribute.IsValid(object? value) -> bool
 override Hubertech.Belgium.BelgianHoliday.GetHashCode() -> int
 override Hubertech.Belgium.BelgianIban.Equals(object? obj) -> bool
 override Hubertech.Belgium.BelgianIban.GetHashCode() -> int
 override Hubertech.Belgium.BelgianIban.ToString() -> string!
+override Hubertech.Belgium.BelgianIbanAttribute.IsValid(object? value) -> bool
+override Hubertech.Belgium.BelgianStructuredCommunicationAttribute.IsValid(object? value) -> bool
 override Hubertech.Belgium.BelgianValidationError.GetHashCode() -> int
 override Hubertech.Belgium.EnterpriseNumber.Equals(object? obj) -> bool
 override Hubertech.Belgium.EnterpriseNumber.GetHashCode() -> int
