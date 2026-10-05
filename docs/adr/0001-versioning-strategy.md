@@ -34,3 +34,9 @@ Separately from the version number itself, a breaking change to the public API m
 - CI must clone the full history (`fetch-depth: 0`); with a shallow clone, MinVer cannot see the tags.
 - Untagged builds, including local ones, produce pre-release versions (for example `0.1.1-alpha.0.3`), which cannot be mistaken for a release.
 - A tag pushed on the wrong commit produces a wrong release. Tags are only created on `main`, after CI is green.
+
+## Amendment (2026-10-05)
+
+A tag `v*` runs `.github/workflows/release.yml`, which publishes to nuget.org with Trusted Publishing: the OIDC token of the run is exchanged for a short-lived API key, so no long-lived key is stored in the secrets of the repository. The nuget.org account comes from the `NUGET_USER` repository variable, and a trust policy on nuget.org names the repository and the workflow file.
+
+Before publishing anything, the workflow checks that the tag is on `main`, that `CHANGELOG.md` has a section for the version, that the tests pass, and that the package has the version of the tag. The job runs in the `nuget` environment, whose protection rules can require an approval. The GitHub release carries the packages and the section of the changelog.
