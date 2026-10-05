@@ -1,10 +1,11 @@
 # Hubertech.Belgium
 
+[![NuGet](https://img.shields.io/nuget/v/Hubertech.Belgium)](https://www.nuget.org/packages/Hubertech.Belgium)
 [![CI](https://github.com/Dampsey/Hubertech.Belgium/actions/workflows/ci.yml/badge.svg)](https://github.com/Dampsey/Hubertech.Belgium/actions/workflows/ci.yml)
 
 Belgian administrative identifiers and rules for .NET, in one dependency-free package: the enterprise number (BCE/KBO), the structured communication (OGM/VCS), the Belgian IBAN, public holidays and business days. Every validation error comes with a stable code and a message in English, French or Dutch that can be shown to end users as is.
 
-> **Status:** v0.1 is being prepared and is not on NuGet yet. The API may change until v0.1.0.
+> **Status:** v0.1. While the major version is 0, a minor version may change the API; every change is listed in the [changelog](https://github.com/Dampsey/Hubertech.Belgium/blob/main/CHANGELOG.md).
 
 - **One API for every identifier**: `Parse`, `TryParse`, `Validate`, `IParsable<T>`, `ISpanFormattable`.
 - **Errors made for end users**: stable codes, localized messages that say what to correct.
