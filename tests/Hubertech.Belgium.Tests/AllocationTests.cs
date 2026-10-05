@@ -51,6 +51,21 @@ public sealed class AllocationTests
         }));
     }
 
+    [Fact]
+    public void Business_day_arithmetic_does_not_allocate()
+    {
+        Assert.Equal(0, AllocatedBytes(static () =>
+        {
+            var start = new DateOnly(2026, 4, 2);
+            HolidaySet set = HolidaySet.Legal | HolidaySet.FederalPublicService;
+
+            _ = BelgianCalendar.IsHoliday(start, set);
+            _ = BelgianCalendar.IsBusinessDay(start, set);
+            _ = BelgianCalendar.AddBusinessDays(start, 20, set);
+            _ = BelgianCalendar.CountBusinessDays(start, new DateOnly(2026, 5, 29), set);
+        }));
+    }
+
     private static long AllocatedBytes(Action action)
     {
         // The first run pays for JIT compilation and static initialization.

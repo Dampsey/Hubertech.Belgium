@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="NewYearsDay" xml:space="preserve">
+    <value>Nieuwjaar</value>
+  </data>
+  <data name="EasterMonday" xml:space="preserve">
+    <value>Paasmaandag</value>
+  </data>
+  <data name="LabourDay" xml:space="preserve">
+    <value>Feest van de Arbeid</value>
+  </data>
+  <data name="AscensionDay" xml:space="preserve">
+    <value>Onze-Lieve-Heer-Hemelvaart</value>
+  </data>
+  <data name="WhitMonday" xml:space="preserve">
+    <value>Pinkstermaandag</value>
+  </data>
+  <data name="NationalDay" xml:space="preserve">
+    <value>Nationale feestdag</value>
+  </data>
+  <data name="AssumptionDay" xml:space="preserve">
+    <value>Onze-Lieve-Vrouw-Hemelvaart</value>
+  </data>
+  <data name="AllSaintsDay" xml:space="preserve">
+    <value>Allerheiligen</value>
+  </data>
+  <data name="ArmisticeDay" xml:space="preserve">
+    <value>Wapenstilstand</value>
+  </data>
+  <data name="ChristmasDay" xml:space="preserve">
+    <value>Kerstmis</value>
+  </data>
+  <data name="FlemishCommunityDay" xml:space="preserve">
+    <value>Feest van de Vlaamse Gemeenschap</value>
+  </data>
+  <data name="FrenchCommunityDay" xml:space="preserve">
+    <value>Feest van de Federatie Wallonië-Brussel</value>
+  </data>
+  <data name="GermanSpeakingCommunityDay" xml:space="preserve">
+    <value>Feest van de Duitstalige Gemeenschap</value>
+  </data>
+  <data name="AllSoulsDay" xml:space="preserve">
+    <value>Allerzielen</value>
+  </data>
+  <data name="KingsFeast" xml:space="preserve">
+    <value>Koningsdag</value>
+  </data>
+  <data name="BoxingDay" xml:space="preserve">
+    <value>Tweede kerstdag</value>
+  </data>
+</root>

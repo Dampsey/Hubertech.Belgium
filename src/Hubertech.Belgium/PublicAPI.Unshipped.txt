@@ -1,4 +1,5 @@
 #nullable enable
+Hubertech.Belgium.BelgianCalendar
 Hubertech.Belgium.BelgianErrorCode
 Hubertech.Belgium.BelgianErrorCode.Empty = 1 -> Hubertech.Belgium.BelgianErrorCode
 Hubertech.Belgium.BelgianErrorCode.InvalidCharacter = 2 -> Hubertech.Belgium.BelgianErrorCode
@@ -10,6 +11,13 @@ Hubertech.Belgium.BelgianErrorCode.None = 0 -> Hubertech.Belgium.BelgianErrorCod
 Hubertech.Belgium.BelgianFormatException
 Hubertech.Belgium.BelgianFormatException.BelgianFormatException(Hubertech.Belgium.BelgianValidationError error) -> void
 Hubertech.Belgium.BelgianFormatException.Error.get -> Hubertech.Belgium.BelgianValidationError
+Hubertech.Belgium.BelgianHoliday
+Hubertech.Belgium.BelgianHoliday.BelgianHoliday() -> void
+Hubertech.Belgium.BelgianHoliday.Date.get -> System.DateOnly
+Hubertech.Belgium.BelgianHoliday.Equals(Hubertech.Belgium.BelgianHoliday other) -> bool
+Hubertech.Belgium.BelgianHoliday.GetName(System.Globalization.CultureInfo! culture) -> string!
+Hubertech.Belgium.BelgianHoliday.Kind.get -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.BelgianHoliday.Name.get -> string!
 Hubertech.Belgium.BelgianIban
 Hubertech.Belgium.BelgianIban.AccountNumber.get -> string!
 Hubertech.Belgium.BelgianIban.BankCode.get -> string!
@@ -33,6 +41,31 @@ Hubertech.Belgium.EnterpriseNumber.Equals(Hubertech.Belgium.EnterpriseNumber oth
 Hubertech.Belgium.EnterpriseNumber.IsEmpty.get -> bool
 Hubertech.Belgium.EnterpriseNumber.ToString(string? format) -> string!
 Hubertech.Belgium.EnterpriseNumber.TryFormat(System.Span<char> destination, out int charsWritten, System.ReadOnlySpan<char> format = default(System.ReadOnlySpan<char>)) -> bool
+Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.AllSaintsDay = 8 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.AllSoulsDay = 14 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.ArmisticeDay = 9 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.AscensionDay = 4 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.AssumptionDay = 7 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.BoxingDay = 16 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.ChristmasDay = 10 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.EasterMonday = 2 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.FlemishCommunityDay = 11 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.FrenchCommunityDay = 12 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.GermanSpeakingCommunityDay = 13 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.KingsFeast = 15 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.LabourDay = 3 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.NationalDay = 6 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.NewYearsDay = 1 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.None = 0 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidayKind.WhitMonday = 5 -> Hubertech.Belgium.HolidayKind
+Hubertech.Belgium.HolidaySet
+Hubertech.Belgium.HolidaySet.FederalPublicService = 16 -> Hubertech.Belgium.HolidaySet
+Hubertech.Belgium.HolidaySet.FlemishCommunity = 2 -> Hubertech.Belgium.HolidaySet
+Hubertech.Belgium.HolidaySet.FrenchCommunity = 4 -> Hubertech.Belgium.HolidaySet
+Hubertech.Belgium.HolidaySet.GermanSpeakingCommunity = 8 -> Hubertech.Belgium.HolidaySet
+Hubertech.Belgium.HolidaySet.Legal = 1 -> Hubertech.Belgium.HolidaySet
+Hubertech.Belgium.HolidaySet.None = 0 -> Hubertech.Belgium.HolidaySet
 Hubertech.Belgium.StructuredCommunication
 Hubertech.Belgium.StructuredCommunication.BaseNumber.get -> ulong
 Hubertech.Belgium.StructuredCommunication.Equals(Hubertech.Belgium.StructuredCommunication other) -> bool
@@ -41,6 +74,7 @@ Hubertech.Belgium.StructuredCommunication.StructuredCommunication() -> void
 Hubertech.Belgium.StructuredCommunication.ToString(string? format) -> string!
 Hubertech.Belgium.StructuredCommunication.TryFormat(System.Span<char> destination, out int charsWritten, System.ReadOnlySpan<char> format = default(System.ReadOnlySpan<char>)) -> bool
 const Hubertech.Belgium.StructuredCommunication.MaxBaseNumber = 9999999999 -> ulong
+override Hubertech.Belgium.BelgianHoliday.GetHashCode() -> int
 override Hubertech.Belgium.BelgianIban.Equals(object? obj) -> bool
 override Hubertech.Belgium.BelgianIban.GetHashCode() -> int
 override Hubertech.Belgium.BelgianIban.ToString() -> string!
@@ -51,6 +85,13 @@ override Hubertech.Belgium.EnterpriseNumber.ToString() -> string!
 override Hubertech.Belgium.StructuredCommunication.Equals(object? obj) -> bool
 override Hubertech.Belgium.StructuredCommunication.GetHashCode() -> int
 override Hubertech.Belgium.StructuredCommunication.ToString() -> string!
+static Hubertech.Belgium.BelgianCalendar.AddBusinessDays(System.DateOnly date, int days, Hubertech.Belgium.HolidaySet set = Hubertech.Belgium.HolidaySet.Legal) -> System.DateOnly
+static Hubertech.Belgium.BelgianCalendar.CountBusinessDays(System.DateOnly start, System.DateOnly end, Hubertech.Belgium.HolidaySet set = Hubertech.Belgium.HolidaySet.Legal) -> int
+static Hubertech.Belgium.BelgianCalendar.GetHolidays(int year, Hubertech.Belgium.HolidaySet set = Hubertech.Belgium.HolidaySet.Legal) -> System.Collections.Generic.IReadOnlyList<Hubertech.Belgium.BelgianHoliday>!
+static Hubertech.Belgium.BelgianCalendar.IsBusinessDay(System.DateOnly date, Hubertech.Belgium.HolidaySet set = Hubertech.Belgium.HolidaySet.Legal) -> bool
+static Hubertech.Belgium.BelgianCalendar.IsHoliday(System.DateOnly date, Hubertech.Belgium.HolidaySet set = Hubertech.Belgium.HolidaySet.Legal) -> bool
+static Hubertech.Belgium.BelgianHoliday.operator !=(Hubertech.Belgium.BelgianHoliday left, Hubertech.Belgium.BelgianHoliday right) -> bool
+static Hubertech.Belgium.BelgianHoliday.operator ==(Hubertech.Belgium.BelgianHoliday left, Hubertech.Belgium.BelgianHoliday right) -> bool
 static Hubertech.Belgium.BelgianIban.FromLegacyAccountNumber(System.ReadOnlySpan<char> accountNumber) -> Hubertech.Belgium.BelgianIban
 static Hubertech.Belgium.BelgianIban.FromLegacyAccountNumber(string! accountNumber) -> Hubertech.Belgium.BelgianIban
 static Hubertech.Belgium.BelgianIban.Parse(System.ReadOnlySpan<char> s) -> Hubertech.Belgium.BelgianIban
@@ -88,5 +129,7 @@ static Hubertech.Belgium.StructuredCommunication.Validate(System.ReadOnlySpan<ch
 static Hubertech.Belgium.StructuredCommunication.Validate(string? s) -> Hubertech.Belgium.BelgianValidationError?
 static Hubertech.Belgium.StructuredCommunication.operator !=(Hubertech.Belgium.StructuredCommunication left, Hubertech.Belgium.StructuredCommunication right) -> bool
 static Hubertech.Belgium.StructuredCommunication.operator ==(Hubertech.Belgium.StructuredCommunication left, Hubertech.Belgium.StructuredCommunication right) -> bool
+~override Hubertech.Belgium.BelgianHoliday.Equals(object obj) -> bool
+~override Hubertech.Belgium.BelgianHoliday.ToString() -> string
 ~override Hubertech.Belgium.BelgianValidationError.Equals(object obj) -> bool
 ~override Hubertech.Belgium.BelgianValidationError.ToString() -> string
