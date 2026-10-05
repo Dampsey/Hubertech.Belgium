@@ -27,3 +27,7 @@ Option 3.
 - Parsing and formatting do not allocate. A unit test measures it with `GC.GetAllocatedBytesForCurrentThread`, for valid and invalid input alike.
 - `new EnterpriseNumber()` and uninitialized fields compile and produce the empty value. This is documented, and detectable with `IsEmpty`. How an empty value is serialized is decided with the JSON converter.
 - Two values are equal if and only if they denote the same identifier, whatever the separators, case or legacy form used to write them.
+
+## Amendment (2026-10-05)
+
+The JSON converters refuse to write an empty value, and the validation attributes report it as an `Empty` error. See ADR 0006.
