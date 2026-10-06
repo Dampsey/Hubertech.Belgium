@@ -206,6 +206,31 @@ public sealed class JsonSerializationTests
         Assert.Equal(balances, JsonSerializer.Deserialize<Dictionary<BelgianIban, decimal>>(balancesJson, options));
     }
 
+    [Theory]
+    [InlineData(Serializer.Reflection)]
+    [InlineData(Serializer.SourceGeneration)]
+    public void Writes_the_full_social_security_identification_number_although_ToString_masks_it(Serializer serializer)
+    {
+        var options = Options(serializer);
+        var employee = new Employee(SocialSecurityIdentificationNumber.Parse("85.07.30-033.28"));
+
+        string json = JsonSerializer.Serialize(employee, options);
+
+        Assert.Equal("""{"Number":"85073003328"}""", json);
+        Assert.Equal(employee, JsonSerializer.Deserialize<Employee>("""{"Number":"85.07.30-033.28"}""", options));
+        Assert.Equal("**.**.**-***.28", employee.Number.ToString());
+    }
+
+    [Fact]
+    public void Rejects_an_invalid_social_security_identification_number_with_the_validation_error()
+    {
+        var exception = Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<Employee>("""{"Number":"85.13.30-033.70"}"""));
+
+        var inner = Assert.IsType<BelgianFormatException>(exception.InnerException);
+        Assert.Equal(BelgianErrorCode.InvalidBirthDate, inner.Error.Code);
+        Assert.Equal("$.Number", exception.Path);
+    }
+
     [Fact]
     public void Rejects_an_invalid_dictionary_key_with_the_validation_error()
     {
@@ -248,8 +273,11 @@ public sealed record Payment(EnterpriseNumber Payee, StructuredCommunication Ref
 
 public sealed record OptionalPayment(EnterpriseNumber? Payee, StructuredCommunication? Reference, BelgianIban? Account);
 
+public sealed record Employee(SocialSecurityIdentificationNumber Number);
+
 [JsonSerializable(typeof(Payment))]
 [JsonSerializable(typeof(OptionalPayment))]
+[JsonSerializable(typeof(Employee))]
 [JsonSerializable(typeof(Dictionary<EnterpriseNumber, decimal>))]
 [JsonSerializable(typeof(Dictionary<StructuredCommunication, decimal>))]
 [JsonSerializable(typeof(Dictionary<BelgianIban, decimal>))]

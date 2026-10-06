@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
+using Hubertech.Belgium.Serialization;
 
 namespace Hubertech.Belgium;
 
@@ -48,9 +50,14 @@ namespace Hubertech.Belgium;
 /// <see cref="ISpanFormattable"/> that take an <see cref="IFormatProvider"/> are implemented
 /// explicitly and ignore it.
 /// </para>
+/// <para>
+/// In JSON, the value is the full number, converted by
+/// <see cref="SocialSecurityIdentificationNumberJsonConverter"/>.
+/// </para>
 /// </remarks>
 /// <seealso href="https://www.ksz-bcss.fgov.be/fr/page/arrete-royal-du-8-fevier-1991">Royal Decree of 8 February 1991 on the composition of the BIS number</seealso>
 /// <seealso href="https://www.ibz.rrn.fgov.be/sites/default/files/documents/fr/registre-national/instructions/liste-TI/TI000_Numero-identification.pdf">National Register: instruction TI000 on the identification number</seealso>
+[JsonConverter(typeof(SocialSecurityIdentificationNumberJsonConverter))]
 public readonly struct SocialSecurityIdentificationNumber
     : IEquatable<SocialSecurityIdentificationNumber>, ISpanFormattable, ISpanParsable<SocialSecurityIdentificationNumber>, IBelgianIdentifier<SocialSecurityIdentificationNumber>
 {
