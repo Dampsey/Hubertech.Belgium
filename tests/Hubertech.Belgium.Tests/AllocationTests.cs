@@ -56,6 +56,23 @@ public sealed class AllocationTests
     }
 
     [Fact]
+    public void Social_security_identification_number_parsing_and_formatting_do_not_allocate()
+    {
+        Assert.Equal(0, AllocatedBytes(static () =>
+        {
+            Span<char> destination = stackalloc char[15];
+
+            _ = SocialSecurityIdentificationNumber.TryParse("85.07.30-033.28".AsSpan(), out var number, out _);
+            _ = SocialSecurityIdentificationNumber.TryParse("17.07.30-033.84".AsSpan(), out _, out _);
+            _ = SocialSecurityIdentificationNumber.TryParse("85.07.30-033.29".AsSpan(), out _, out _);
+            _ = number.TryFormat(destination, out _);
+            _ = number.TryFormat(destination, out _, "D");
+            _ = number.Kind;
+            _ = number.BirthDate;
+        }));
+    }
+
+    [Fact]
     public void Business_day_arithmetic_does_not_allocate()
     {
         Assert.Equal(0, AllocatedBytes(static () =>

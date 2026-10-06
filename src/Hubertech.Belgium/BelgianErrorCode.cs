@@ -45,7 +45,14 @@ public enum BelgianErrorCode
 
     /// <summary>
     /// The check digits do not match the other digits, which usually reveals a typing error.
-    /// <see cref="BelgianValidationError.Expected"/> gives the check digits that would match.
+    /// <see cref="BelgianValidationError.Expected"/> gives the check digits that would match,
+    /// when they can be determined.
     /// </summary>
     InvalidChecksum = 6,
+
+    /// <summary>
+    /// The digits that encode a date of birth are not valid, for example a social security
+    /// identification number whose month of birth is 13.
+    /// </summary>
+    InvalidBirthDate = 7,
 }

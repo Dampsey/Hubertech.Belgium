@@ -1,1 +1,27 @@
 #nullable enable
+Hubertech.Belgium.BelgianErrorCode.InvalidBirthDate = 7 -> Hubertech.Belgium.BelgianErrorCode
+Hubertech.Belgium.SocialSecurityIdentificationNumber
+Hubertech.Belgium.SocialSecurityIdentificationNumber.BirthDate.get -> System.DateOnly?
+Hubertech.Belgium.SocialSecurityIdentificationNumber.Equals(Hubertech.Belgium.SocialSecurityIdentificationNumber other) -> bool
+Hubertech.Belgium.SocialSecurityIdentificationNumber.IsEmpty.get -> bool
+Hubertech.Belgium.SocialSecurityIdentificationNumber.Kind.get -> Hubertech.Belgium.SocialSecurityIdentificationNumberKind
+Hubertech.Belgium.SocialSecurityIdentificationNumber.SocialSecurityIdentificationNumber() -> void
+Hubertech.Belgium.SocialSecurityIdentificationNumber.ToString(string? format) -> string!
+Hubertech.Belgium.SocialSecurityIdentificationNumber.TryFormat(System.Span<char> destination, out int charsWritten, System.ReadOnlySpan<char> format = default(System.ReadOnlySpan<char>)) -> bool
+Hubertech.Belgium.SocialSecurityIdentificationNumberKind
+Hubertech.Belgium.SocialSecurityIdentificationNumberKind.Bis = 2 -> Hubertech.Belgium.SocialSecurityIdentificationNumberKind
+Hubertech.Belgium.SocialSecurityIdentificationNumberKind.NationalRegister = 1 -> Hubertech.Belgium.SocialSecurityIdentificationNumberKind
+Hubertech.Belgium.SocialSecurityIdentificationNumberKind.None = 0 -> Hubertech.Belgium.SocialSecurityIdentificationNumberKind
+override Hubertech.Belgium.SocialSecurityIdentificationNumber.Equals(object? obj) -> bool
+override Hubertech.Belgium.SocialSecurityIdentificationNumber.GetHashCode() -> int
+override Hubertech.Belgium.SocialSecurityIdentificationNumber.ToString() -> string!
+static Hubertech.Belgium.SocialSecurityIdentificationNumber.Parse(System.ReadOnlySpan<char> s) -> Hubertech.Belgium.SocialSecurityIdentificationNumber
+static Hubertech.Belgium.SocialSecurityIdentificationNumber.Parse(string! s) -> Hubertech.Belgium.SocialSecurityIdentificationNumber
+static Hubertech.Belgium.SocialSecurityIdentificationNumber.TryParse(System.ReadOnlySpan<char> s, out Hubertech.Belgium.SocialSecurityIdentificationNumber result) -> bool
+static Hubertech.Belgium.SocialSecurityIdentificationNumber.TryParse(System.ReadOnlySpan<char> s, out Hubertech.Belgium.SocialSecurityIdentificationNumber result, out Hubertech.Belgium.BelgianValidationError error) -> bool
+static Hubertech.Belgium.SocialSecurityIdentificationNumber.TryParse(string? s, out Hubertech.Belgium.SocialSecurityIdentificationNumber result) -> bool
+static Hubertech.Belgium.SocialSecurityIdentificationNumber.TryParse(string? s, out Hubertech.Belgium.SocialSecurityIdentificationNumber result, out Hubertech.Belgium.BelgianValidationError error) -> bool
+static Hubertech.Belgium.SocialSecurityIdentificationNumber.Validate(System.ReadOnlySpan<char> s) -> Hubertech.Belgium.BelgianValidationError?
+static Hubertech.Belgium.SocialSecurityIdentificationNumber.Validate(string? s) -> Hubertech.Belgium.BelgianValidationError?
+static Hubertech.Belgium.SocialSecurityIdentificationNumber.operator !=(Hubertech.Belgium.SocialSecurityIdentificationNumber left, Hubertech.Belgium.SocialSecurityIdentificationNumber right) -> bool
+static Hubertech.Belgium.SocialSecurityIdentificationNumber.operator ==(Hubertech.Belgium.SocialSecurityIdentificationNumber left, Hubertech.Belgium.SocialSecurityIdentificationNumber right) -> bool

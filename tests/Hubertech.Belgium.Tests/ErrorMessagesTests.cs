@@ -14,7 +14,7 @@ public sealed class ErrorMessagesTests
     // What a message can talk about: a parsed type, or the legacy account number that
     // BelgianIban.FromLegacyAccountNumber converts.
     private static readonly string[] Subjects =
-        [nameof(EnterpriseNumber), nameof(StructuredCommunication), nameof(BelgianIban), "BelgianAccountNumber"];
+        [nameof(EnterpriseNumber), nameof(StructuredCommunication), nameof(BelgianIban), "BelgianAccountNumber", nameof(SocialSecurityIdentificationNumber)];
 
     public static TheoryData<string> Translations => ["fr", "nl"];
 

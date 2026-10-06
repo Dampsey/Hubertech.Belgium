@@ -70,14 +70,21 @@ public readonly record struct BelgianValidationError
 
     /// <summary>
     /// Gets the two check digits that would match the other digits, when <see cref="Code"/> is
-    /// <see cref="BelgianErrorCode.InvalidChecksum"/>; otherwise <see langword="null"/>.
+    /// <see cref="BelgianErrorCode.InvalidChecksum"/> and they can be determined; otherwise
+    /// <see langword="null"/>.
     /// </summary>
     /// <remarks>
+    /// <para>
     /// A checksum mismatch does not tell which digit is wrong, and a typing error is more
     /// likely among the other digits than in the check digits themselves. This value is meant
     /// for diagnostics and support. It is deliberately left out of <see cref="Message"/>:
     /// suggesting it to end users would lead them to turn a mistyped number into a valid but
     /// wrong one.
+    /// </para>
+    /// <para>
+    /// It is <see langword="null"/> for a <see cref="SocialSecurityIdentificationNumber"/>, whose
+    /// check digits depend on the century of birth, which the number does not carry.
+    /// </para>
     /// </remarks>
     public string? Expected => _expectedCheckDigits?.ToString("00", CultureInfo.InvariantCulture);
 
@@ -135,6 +142,13 @@ public readonly record struct BelgianValidationError
 
         return new(typeName, BelgianErrorCode.InvalidChecksum, expectedCheckDigits: (byte)expectedCheckDigits);
     }
+
+    // For a number whose check digits depend on something it does not carry.
+    internal static BelgianValidationError InvalidChecksum(string typeName) =>
+        new(typeName, BelgianErrorCode.InvalidChecksum);
+
+    internal static BelgianValidationError InvalidBirthDate(string typeName) =>
+        new(typeName, BelgianErrorCode.InvalidBirthDate);
 
     /// <summary>
     /// Gets a copy of this error whose message is about <paramref name="subject"/> rather than

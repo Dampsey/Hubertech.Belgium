@@ -69,4 +69,19 @@
   <data name="BelgianAccountNumber_InvalidChecksum" xml:space="preserve">
     <value>The account number is invalid: its check digits do not match. Please check it for typing errors.</value>
   </data>
+  <data name="SocialSecurityIdentificationNumber_Empty" xml:space="preserve">
+    <value>The national register or BIS number is empty.</value>
+  </data>
+  <data name="SocialSecurityIdentificationNumber_InvalidCharacter" xml:space="preserve">
+    <value>The national register or BIS number contains an invalid character, '{0}', at position {1}.</value>
+  </data>
+  <data name="SocialSecurityIdentificationNumber_InvalidLength" xml:space="preserve">
+    <value>A national register or BIS number must contain 11 digits.</value>
+  </data>
+  <data name="SocialSecurityIdentificationNumber_InvalidBirthDate" xml:space="preserve">
+    <value>The national register or BIS number is invalid: its third and fourth digits are not a month of birth.</value>
+  </data>
+  <data name="SocialSecurityIdentificationNumber_InvalidChecksum" xml:space="preserve">
+    <value>The national register or BIS number is invalid: its check digits do not match. Please check it for typing errors.</value>
+  </data>
 </root>
