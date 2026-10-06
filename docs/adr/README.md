@@ -10,3 +10,4 @@ Each structuring decision is recorded in a short document: context, options cons
 | [0004](0004-identifiers-are-value-types.md) | Identifiers are value types | Accepted |
 | [0005](0005-holiday-calendar.md) | Holiday calendar | Accepted |
 | [0006](0006-json-and-validation-integrations.md) | JSON and validation integrations | Accepted |
+| [0007](0007-social-security-identification-number.md) | Social security identification number | Accepted |
