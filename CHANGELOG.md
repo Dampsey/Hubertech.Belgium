@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-07
+
 ### Added
 
 - `SocialSecurityIdentificationNumber`: the Belgian social security identification number (NISS/INSZ), which is either a national register number or a BIS number. Accepts separators, checks the month of birth and the mod 97 check digits of both centuries, tells the register (`Kind`) and the date of birth when it is complete (`BirthDate`). `ToString()` masks every digit but the check digits, `**.**.**-***.28`; the formats `D` and `N` give the full number.
@@ -31,5 +33,6 @@ First release.
 - `BelgianValidationError`: why a value is invalid, with a message in English, French or Dutch that can be shown to end users as is.
 - `BelgianFormatException`: a `FormatException` carrying a `BelgianValidationError`.
 
-[Unreleased]: https://github.com/Dampsey/Hubertech.Belgium/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Dampsey/Hubertech.Belgium/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/Dampsey/Hubertech.Belgium/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/Dampsey/Hubertech.Belgium/releases/tag/v0.1.0
