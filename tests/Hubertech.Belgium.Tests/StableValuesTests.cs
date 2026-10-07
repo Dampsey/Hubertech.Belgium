@@ -1,6 +1,7 @@
 namespace Hubertech.Belgium.Tests;
 
-// Holiday kinds and sets can be stored by consumers: a value must never change.
+// Holiday kinds and sets, and kinds of social security identification numbers, can be stored
+// by consumers: a value must never change.
 // Adding a member means adding a line here, with the next free value.
 public sealed class StableValuesTests
 {
@@ -39,10 +40,20 @@ public sealed class StableValuesTests
         Assert.Equal(value, (int)set);
     }
 
+    [Theory]
+    [InlineData(SocialSecurityIdentificationNumberKind.None, 0)]
+    [InlineData(SocialSecurityIdentificationNumberKind.NationalRegister, 1)]
+    [InlineData(SocialSecurityIdentificationNumberKind.Bis, 2)]
+    public void Social_security_identification_number_kind_value_never_changes(SocialSecurityIdentificationNumberKind kind, int value)
+    {
+        Assert.Equal(value, (int)kind);
+    }
+
     [Fact]
     public void Every_value_is_pinned_by_a_test()
     {
         Assert.Equal(17, Enum.GetValues<HolidayKind>().Length);
         Assert.Equal(6, Enum.GetValues<HolidaySet>().Length);
+        Assert.Equal(3, Enum.GetValues<SocialSecurityIdentificationNumberKind>().Length);
     }
 }

@@ -69,4 +69,19 @@
   <data name="BelgianAccountNumber_InvalidChecksum" xml:space="preserve">
     <value>Het rekeningnummer is ongeldig: de controlecijfers kloppen niet. Controleer of het geen tikfout bevat.</value>
   </data>
+  <data name="SocialSecurityIdentificationNumber_Empty" xml:space="preserve">
+    <value>Het rijksregister- of BIS-nummer is leeg.</value>
+  </data>
+  <data name="SocialSecurityIdentificationNumber_InvalidCharacter" xml:space="preserve">
+    <value>Het rijksregister- of BIS-nummer bevat een ongeldig teken, '{0}', op positie {1}.</value>
+  </data>
+  <data name="SocialSecurityIdentificationNumber_InvalidLength" xml:space="preserve">
+    <value>Een rijksregister- of BIS-nummer moet 11 cijfers bevatten.</value>
+  </data>
+  <data name="SocialSecurityIdentificationNumber_InvalidBirthDate" xml:space="preserve">
+    <value>Het rijksregister- of BIS-nummer is ongeldig: het derde en vierde cijfer vormen geen geboortemaand.</value>
+  </data>
+  <data name="SocialSecurityIdentificationNumber_InvalidChecksum" xml:space="preserve">
+    <value>Het rijksregister- of BIS-nummer is ongeldig: de controlecijfers kloppen niet. Controleer of het geen tikfout bevat.</value>
+  </data>
 </root>

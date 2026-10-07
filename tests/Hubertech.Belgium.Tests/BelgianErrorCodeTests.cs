@@ -12,6 +12,7 @@ public sealed class BelgianErrorCodeTests
     [InlineData(BelgianErrorCode.InvalidCountryCode, 4)]
     [InlineData(BelgianErrorCode.InvalidFirstDigit, 5)]
     [InlineData(BelgianErrorCode.InvalidChecksum, 6)]
+    [InlineData(BelgianErrorCode.InvalidBirthDate, 7)]
     public void Value_never_changes(BelgianErrorCode code, int value)
     {
         Assert.Equal(value, (int)code);
@@ -20,6 +21,6 @@ public sealed class BelgianErrorCodeTests
     [Fact]
     public void Every_value_is_pinned_by_a_test()
     {
-        Assert.Equal(7, Enum.GetValues<BelgianErrorCode>().Length);
+        Assert.Equal(8, Enum.GetValues<BelgianErrorCode>().Length);
     }
 }

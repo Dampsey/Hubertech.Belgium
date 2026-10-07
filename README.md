@@ -3,7 +3,7 @@
 [![NuGet](https://img.shields.io/nuget/v/Hubertech.Belgium)](https://www.nuget.org/packages/Hubertech.Belgium)
 [![CI](https://github.com/Dampsey/Hubertech.Belgium/actions/workflows/ci.yml/badge.svg)](https://github.com/Dampsey/Hubertech.Belgium/actions/workflows/ci.yml)
 
-Belgian administrative identifiers and rules for .NET, in one dependency-free package: the enterprise number (BCE/KBO), the structured communication (OGM/VCS), the Belgian IBAN, public holidays and business days. Every validation error comes with a stable code and a message in English, French or Dutch that can be shown to end users as is.
+Belgian administrative identifiers and rules for .NET, in one dependency-free package: the enterprise number (BCE/KBO), the structured communication (OGM/VCS), the Belgian IBAN, the social security identification number (NISS/INSZ), public holidays and business days. Every validation error comes with a stable code and a message in English, French or Dutch that can be shown to end users as is.
 
 > **Status:** v0.1. While the major version is 0, a minor version may change the API; every change is listed in the [changelog](https://github.com/Dampsey/Hubertech.Belgium/blob/main/CHANGELOG.md).
 
@@ -74,6 +74,26 @@ BelgianIban.FromLegacyAccountNumber("539-0075470-34") == iban;  // true
 
 Two checks must pass: the IBAN check digits (ISO 7064 MOD 97-10, as for every IBAN) and the check digits of the Belgian account number (the remainder of the division of its first ten digits by 97, or 97 when that remainder is 0). The bank code is not checked against the list of the National Bank of Belgium.
 
+## Social security identification number
+
+`SocialSecurityIdentificationNumber` is the NISS (INSZ in Dutch): the national register number of a person registered in the National Register, or the BIS number of a person who is not but deals with the Belgian social security.
+
+```csharp
+var number = SocialSecurityIdentificationNumber.Parse("85.07.30-033.28");
+
+number.ToString();     // "**.**.**-***.28": masked, safe to log
+number.ToString("D");  // "85.07.30-033.28"
+number.ToString("N");  // "85073003328"
+number.Kind;           // SocialSecurityIdentificationNumberKind.NationalRegister
+number.BirthDate;      // 1985-07-30, or null when the encoded date is incomplete
+```
+
+Spaces, dots and hyphens are accepted. The number must then have eleven digits, a month of birth from 00 to 12, or increased by 20 or 40 for a BIS number, and two check digits equal to 97 minus the first nine digits modulo 97; for a person born from 2000, these nine digits are preceded by a 2. Check digits that only match a birth after the current year are rejected, so validation depends on the current date.
+
+This number is personal data, and its use is regulated: article 8 of the law of 8 August 1983 organising a National Register restricts the use of the national register number. This package checks the syntax only; it does not tell whether an application may process the number. To keep the number out of logs, `ToString()` masks it, and the full number needs an explicit format. JSON, however, holds the full number. The sex encoded by the serial number is not exposed.
+
+Since the check digits depend on the century of birth, a few typos go undetected: about 0.2% of the single-digit typos and 0.6% of the swaps of adjacent digits turn a number into a valid one of the other century, `06.02.27-549.42` into `00.02.27-549.42` for instance. For the same reason, `BelgianValidationError.Expected` is `null` for this type.
+
 ## Holidays and business days
 
 `BelgianCalendar` knows the ten legal holidays, computes Easter rather than reading a table, and counts business days: Monday to Friday, except the holidays asked for.
@@ -133,7 +153,7 @@ if (!EnterpriseNumber.TryParse(input, out var number, out var error))
 
 `BelgianValidationError` gives:
 
-- `Code`, a `BelgianErrorCode` whose values never change, safe to store or to send to a client: `Empty`, `InvalidCharacter`, `InvalidLength`, `InvalidCountryCode`, `InvalidFirstDigit`, `InvalidChecksum`.
+- `Code`, a `BelgianErrorCode` whose values never change, safe to store or to send to a client: `Empty`, `InvalidCharacter`, `InvalidLength`, `InvalidCountryCode`, `InvalidFirstDigit`, `InvalidChecksum`, `InvalidBirthDate`.
 - `Message`, in the current UI culture, and `GetMessage(CultureInfo)`, in English, French or Dutch. In French, the message above reads "Le numéro d'entreprise est invalide : ses chiffres de contrôle ne correspondent pas. Vérifiez qu'il ne contient pas de faute de frappe."
 - `Position`, the index of an invalid character, which the message shows counted from 1.
 - `Expected`, the check digits that would match the other digits. It is meant for logs and support, and deliberately left out of the message: a mismatch does not tell which digit is wrong, and suggesting new check digits to a user would turn a mistyped number into a valid but wrong one.
@@ -225,6 +245,9 @@ The messages need culture data. In globalization-invariant mode, which the `weba
 | Check digits of the structured communication | [Febelfin banking standards](https://febelfin.be/en/publications/2023/febelfin-banking-standards-for-online-banking) |
 | Format of the Belgian IBAN | [SWIFT IBAN registry](https://www.swift.com/standards/data-standards/iban-international-bank-account-number) |
 | Bank codes | [National Bank of Belgium](https://www.nbb.be/en/payment-systems/payment-standards/bank-identification-codes) |
+| Structure of the national register number and its check digits, including for a birth from 2000 | Royal Decree of 3 April 1984; [National Register, instruction TI000](https://www.ibz.rrn.fgov.be/sites/default/files/documents/fr/registre-national/instructions/liste-TI/TI000_Numero-identification.pdf) |
+| Month of birth of the BIS number, increased by 20 or 40 | [Royal Decree of 8 February 1991](https://www.ksz-bcss.fgov.be/fr/page/arrete-royal-du-8-fevier-1991), article 2 |
+| Restricted use of the national register number | Law of 8 August 1983 organising a National Register, article 8 |
 | Legal holidays | [Royal Decree of 18 April 1974](https://www.ejustice.just.fgov.be/eli/arrete/1974/04/18/1974041801/justel) |
 | Days off of the federal public services | [Royal Decree of 19 November 1998](https://www.ejustice.just.fgov.be/cgi_loi/change_lg_2.pl?language=fr&nm=1998002123&la=F), article 14 |
 | Days of the Flemish and French communities | Decrees of 7 November 1990 and 3 July 1991 |
@@ -240,7 +263,7 @@ Candidates for the next versions, none of them committed yet:
 - German messages and holiday names, the third official language of Belgium.
 - The establishment unit number, once its check digit rule is confirmed in an official text.
 - The BIC of a Belgian IBAN, from the bank codes of the National Bank of Belgium.
-- The national register number (NISS/INSZ), and postal codes.
+- Postal codes.
 - Separate packages for Entity Framework Core value converters and FluentValidation rules.
 
 ## Contributing

@@ -11,6 +11,7 @@ public sealed class ValidationAttributeTests
     [InlineData(nameof(EnterpriseNumber), "BE 0202.239.951")]
     [InlineData(nameof(StructuredCommunication), "+++123/4567/89002+++")]
     [InlineData(nameof(BelgianIban), "BE68 5390 0754 7034")]
+    [InlineData(nameof(SocialSecurityIdentificationNumber), "85.07.30-033.28")]
     public void Accepts_a_valid_string(string type, string value)
     {
         var attribute = Attribute(type);
@@ -26,6 +27,8 @@ public sealed class ValidationAttributeTests
     [InlineData(nameof(BelgianIban), "NL91 ABNA 0417 1643 00")]
     [InlineData(nameof(BelgianIban), "BE68 5390 0754 703X")]
     [InlineData(nameof(BelgianIban), "   ")]
+    [InlineData(nameof(SocialSecurityIdentificationNumber), "85.07.30-033.29")]
+    [InlineData(nameof(SocialSecurityIdentificationNumber), "85.13.30-033.70")]
     public void Rejects_an_invalid_string_with_the_message_of_the_validation_error(string type, string value)
     {
         var attribute = Attribute(type);
@@ -42,6 +45,7 @@ public sealed class ValidationAttributeTests
     [InlineData(nameof(EnterpriseNumber))]
     [InlineData(nameof(StructuredCommunication))]
     [InlineData(nameof(BelgianIban))]
+    [InlineData(nameof(SocialSecurityIdentificationNumber))]
     public void Leaves_a_missing_value_to_the_required_attribute(string type)
     {
         var attribute = Attribute(type);
@@ -150,6 +154,7 @@ public sealed class ValidationAttributeTests
     {
         nameof(EnterpriseNumber) => new BelgianEnterpriseNumberAttribute(),
         nameof(StructuredCommunication) => new BelgianStructuredCommunicationAttribute(),
+        nameof(SocialSecurityIdentificationNumber) => new BelgianSocialSecurityIdentificationNumberAttribute(),
         _ => new BelgianIbanAttribute(),
     };
 
@@ -157,6 +162,7 @@ public sealed class ValidationAttributeTests
     {
         nameof(EnterpriseNumber) => EnterpriseNumber.Validate(value),
         nameof(StructuredCommunication) => StructuredCommunication.Validate(value),
+        nameof(SocialSecurityIdentificationNumber) => SocialSecurityIdentificationNumber.Validate(value),
         _ => BelgianIban.Validate(value),
     } ?? throw new ArgumentException("The value is valid.", nameof(value));
 
