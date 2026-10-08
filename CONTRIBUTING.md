@@ -34,6 +34,17 @@ dotnet run -c Release --project benchmarks/Hubertech.Belgium.Benchmarks -- --fil
 - **Structuring decisions are recorded** in [`docs/adr`](docs/adr). A record is never rewritten: a reversed decision gets a new record, a precision gets a dated amendment.
 - **No emoji**, in code, commits or documentation.
 
+## Updating the bank codes
+
+`BelgianIban.Bic` reads `src/Hubertech.Belgium/BankCodes.Generated.cs`, generated from the [grouped list of bank identification codes](https://www.nbb.be/en/payments-and-securities/bank-identification-codes) of the National Bank of Belgium, which changes each time a code does. To take a new list:
+
+```shell
+dotnet run tools/UpdateBankCodes.cs                        # downloads the current list
+dotnet run tools/UpdateBankCodes.cs -- path/to/list.xlsx   # or reads a copy downloaded beforehand
+```
+
+The tool writes nothing when the list does not have the expected shape: a code missing or listed twice, or a value that is neither a BIC nor a placeholder it knows. Never edit the generated file by hand. Review its diff, update the date of the list in the README, the XML documentation if needed and the changelog, and update the tests that cite a code whose BIC changed. A new list alone is released as a patch version.
+
 ## Translations
 
 The Dutch messages and holiday names have not been reviewed by a native speaker yet: a review is very welcome. German, the third official language of Belgium, is on the roadmap.

@@ -68,11 +68,16 @@ iban.ToString();     // "BE68 5390 0754 7034", the paper format
 iban.ToString("E");  // "BE68539007547034", the electronic format
 iban.BankCode;       // "539"
 iban.AccountNumber;  // "539-0075470-34"
+iban.Bic;            // null: the National Bank of Belgium gives no BIC for code 539
+
+BelgianIban.Parse("BE48 0011 2345 6727").Bic;  // "GEBABEBB"
 
 BelgianIban.FromLegacyAccountNumber("539-0075470-34") == iban;  // true
 ```
 
 Two checks must pass: the IBAN check digits (ISO 7064 MOD 97-10, as for every IBAN) and the check digits of the Belgian account number (the remainder of the division of its first ten digits by 97, or 97 when that remainder is 0). The bank code is not checked against the list of the National Bank of Belgium.
+
+`Bic` gives the BIC that the [list of bank identification codes](https://www.nbb.be/en/payments-and-securities/bank-identification-codes) of the National Bank of Belgium assigns to the bank code, or `null` when it gives none: a free or unavailable code, or an institution without a BIC. The BIC is returned as published, with eight characters or, for a few codes, eleven. The list is embedded in the package: this version carries the list of 1 September 2026, whereas the National Bank updates it each time a code changes, and refers to the institution or to SWIFT for a specific use. Note that a bank may no longer require the BIC from its customer for a credit transfer or a direct debit in euro within the European Union, at the latest since 1 February 2016 ([Regulation (EU) No 260/2012](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32012R0260), article 5(7)): banks still exchange it between them, but an application mostly needs it to name the bank or to fill an older format.
 
 ## Social security identification number
 
@@ -244,7 +249,7 @@ The messages need culture data. In globalization-invariant mode, which the `weba
 | Check digits of the enterprise number: 97 minus the first eight digits modulo 97 | No official text found: see below |
 | Check digits of the structured communication | [Febelfin banking standards](https://febelfin.be/en/publications/2023/febelfin-banking-standards-for-online-banking) |
 | Format of the Belgian IBAN | [SWIFT IBAN registry](https://www.swift.com/standards/data-standards/iban-international-bank-account-number) |
-| Bank codes | [National Bank of Belgium](https://www.nbb.be/en/payment-systems/payment-standards/bank-identification-codes) |
+| Bank codes and their BIC | [National Bank of Belgium](https://www.nbb.be/en/payments-and-securities/bank-identification-codes), grouped list of 1 September 2026 |
 | Structure of the national register number and its check digits, including for a birth from 2000 | Royal Decree of 3 April 1984; [National Register, instruction TI000](https://www.ibz.rrn.fgov.be/sites/default/files/documents/fr/registre-national/instructions/liste-TI/TI000_Numero-identification.pdf) |
 | Month of birth of the BIS number, increased by 20 or 40 | [Royal Decree of 8 February 1991](https://www.ksz-bcss.fgov.be/fr/page/arrete-royal-du-8-fevier-1991), article 2 |
 | Restricted use of the national register number | Law of 8 August 1983 organising a National Register, article 8 |
@@ -262,7 +267,6 @@ Candidates for the next versions, none of them committed yet:
 
 - German messages and holiday names, the third official language of Belgium.
 - The establishment unit number, once its check digit rule is confirmed in an official text.
-- The BIC of a Belgian IBAN, from the bank codes of the National Bank of Belgium.
 - Postal codes.
 - Separate packages for Entity Framework Core value converters and FluentValidation rules.
 
