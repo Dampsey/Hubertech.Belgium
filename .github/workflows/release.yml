@@ -1,6 +1,15 @@
 name: Release
+run-name: Release ${{ inputs.version || github.ref_name }}
 
 on:
+  # Actions > Release > Run workflow, on main: the workflow creates the tag of the version.
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to release, such as 0.2.0. CHANGELOG.md must have a section for it.
+        required: true
+        type: string
+  # Pushing a tag v* on a commit of main does the same.
   push:
     tags: ['v*']
 
@@ -22,7 +31,7 @@ jobs:
     # Protection rules on this environment, such as a required reviewer, gate every publication.
     environment: nuget
     permissions:
-      # Creates the GitHub release.
+      # Creates the tag and the GitHub release.
       contents: write
       # Trusted Publishing: the OIDC token of the run is exchanged for a short-lived NuGet API key.
       id-token: write
@@ -34,14 +43,41 @@ jobs:
           # MinVer computes the version from the Git tags and history.
           fetch-depth: 0
 
-      # Everything that can fail is checked before anything is published.
-      - name: Check the tag and the configuration
+      # The version typed when the workflow is run by hand, or the version of the pushed tag.
+      - name: Resolve the version
         env:
+          REQUESTED: ${{ github.event_name == 'workflow_dispatch' && inputs.version || github.ref_name }}
+        run: |
+          version="${REQUESTED#v}"
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::The version must look like 0.2.0, or 0.2.0-beta.1 for a pre-release."
+            exit 1
+          fi
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+          echo "TAG=v$version" >> "$GITHUB_ENV"
+
+      # Everything that can fail is checked before anything is published.
+      - name: Check the commit, the tag and the configuration
+        env:
+          GH_TOKEN: ${{ github.token }}
           NUGET_USER: ${{ vars.NUGET_USER }}
         run: |
-          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
-            echo "::error::$GITHUB_REF_NAME is not on main: tags are only created on main, after CI is green."
+          if ! git merge-base --is-ancestor HEAD origin/main; then
+            echo "::error::Releases are made from main: run the workflow on main, or push the tag on a commit of main."
             exit 1
+          fi
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            echo "::error::$TAG is already released: add a section for the next version to CHANGELOG.md."
+            exit 1
+          fi
+          if git rev-parse --quiet --verify "refs/tags/$TAG" > /dev/null; then
+            if [ "$(git rev-parse "$TAG^{commit}")" != "$(git rev-parse HEAD)" ]; then
+              echo "::error::$TAG already exists on another commit."
+              exit 1
+            fi
+          else
+            # Run by hand: tag the commit here for MinVer; the release creates the tag on GitHub.
+            git tag "$TAG"
           fi
           if [ -z "$NUGET_USER" ]; then
             echo "::error::Set the NUGET_USER repository variable to the nuget.org account that owns the package."
@@ -50,15 +86,14 @@ jobs:
 
       - name: Extract the release notes from the changelog
         run: |
-          version="${GITHUB_REF_NAME#v}"
           # The section of the version, up to the next version or to the link definitions.
-          awk -v heading="## [$version]" '
+          awk -v heading="## [$VERSION]" '
             /^## \[/ { if (found) exit; found = index($0, heading) == 1; next }
             /^\[[^]]+\]: / { if (found) exit }
             found
           ' CHANGELOG.md > release-notes.md
           if ! grep -q '[^[:space:]]' release-notes.md; then
-            echo "::error::CHANGELOG.md has no section for $version."
+            echo "::error::CHANGELOG.md has no section for $VERSION."
             exit 1
           fi
 
@@ -82,7 +117,7 @@ jobs:
       # A tag MinVer does not read as a version would produce a pre-release of 0.0.0.
       - name: Check the package version
         run: |
-          package="artifacts/packages/Hubertech.Belgium.${GITHUB_REF_NAME#v}.nupkg"
+          package="artifacts/packages/Hubertech.Belgium.$VERSION.nupkg"
           if [ ! -f "$package" ]; then
             echo "::error::$package was not produced. Packages found:"
             ls artifacts/packages
@@ -103,15 +138,19 @@ jobs:
           --source https://api.nuget.org/v3/index.json
           --skip-duplicate
 
+      # Creates the tag on GitHub when it does not exist yet. --target is required: without it, gh
+      # refuses a tag that exists only locally, as the one created for MinVer does. It also keeps
+      # the released commit if main has moved since the run started.
       - name: Create the GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           prerelease=""
-          if [[ "$GITHUB_REF_NAME" == *-* ]]; then
+          if [[ "$VERSION" == *-* ]]; then
             prerelease="--prerelease"
           fi
-          gh release create "$GITHUB_REF_NAME" artifacts/packages/* \
-            --title "$GITHUB_REF_NAME" \
+          gh release create "$TAG" artifacts/packages/* \
+            --target "$(git rev-parse HEAD)" \
+            --title "$TAG" \
             --notes-file release-notes.md \
             $prerelease
