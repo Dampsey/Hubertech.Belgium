@@ -11,3 +11,4 @@ Each structuring decision is recorded in a short document: context, options cons
 | [0005](0005-holiday-calendar.md) | Holiday calendar | Accepted |
 | [0006](0006-json-and-validation-integrations.md) | JSON and validation integrations | Accepted |
 | [0007](0007-social-security-identification-number.md) | Social security identification number | Accepted |
+| [0008](0008-embedded-reference-data.md) | Embedded reference data | Accepted |
