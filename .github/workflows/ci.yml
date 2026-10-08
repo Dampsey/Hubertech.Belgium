@@ -44,6 +44,11 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
+      # The generator of the bank codes is a file-based app outside the solution: building it here
+      # keeps it from breaking unnoticed between two updates of the list.
+      - name: Build tools
+        run: dotnet build tools/UpdateBankCodes.cs
+
       - name: Test
         run: dotnet test --configuration Release --no-build
 
