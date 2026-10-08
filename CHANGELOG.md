@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `SocialSecurityIdentificationNumber`: the Belgian social security identification number (NISS/INSZ), which is either a national register number or a BIS number. Accepts separators, checks the month of birth and the mod 97 check digits of both centuries, tells the register (`Kind`) and the date of birth when it is complete (`BirthDate`). `ToString()` masks every digit but the check digits, `**.**.**-***.28`; the formats `D` and `N` give the full number.
 - `BelgianErrorCode.InvalidBirthDate`, for a month of birth that no register uses.
 - JSON support for `SocialSecurityIdentificationNumber`, which writes the full eleven digits although `ToString()` masks them, and the validation attribute `[BelgianSocialSecurityIdentificationNumber]`.
+- `BelgianIban.Bic`: the BIC that the list of bank identification codes of the National Bank of Belgium assigns to the bank code, as published, or `null` when the list gives none. The package embeds the list of 1 September 2026.
 
 ## [0.1.0] - 2026-10-05
 

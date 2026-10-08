@@ -221,6 +221,7 @@ public sealed class BelgianIbanTests
         Assert.Equal(string.Empty, iban.ToString("E"));
         Assert.Equal(string.Empty, iban.BankCode);
         Assert.Equal(string.Empty, iban.AccountNumber);
+        Assert.Null(iban.Bic);
         Assert.False(Sample.IsEmpty);
     }
 

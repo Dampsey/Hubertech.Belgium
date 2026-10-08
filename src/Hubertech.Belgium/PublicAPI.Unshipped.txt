@@ -1,5 +1,6 @@
 #nullable enable
 Hubertech.Belgium.BelgianErrorCode.InvalidBirthDate = 7 -> Hubertech.Belgium.BelgianErrorCode
+Hubertech.Belgium.BelgianIban.Bic.get -> string?
 Hubertech.Belgium.BelgianSocialSecurityIdentificationNumberAttribute
 Hubertech.Belgium.BelgianSocialSecurityIdentificationNumberAttribute.BelgianSocialSecurityIdentificationNumberAttribute() -> void
 Hubertech.Belgium.Serialization.SocialSecurityIdentificationNumberJsonConverter

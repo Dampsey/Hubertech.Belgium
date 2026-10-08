@@ -19,7 +19,8 @@ namespace Hubertech.Belgium;
 /// </para>
 /// <para>
 /// The bank code is not checked against the list of the National Bank of Belgium: an IBAN that
-/// passes both checks is accepted even if no bank uses its code.
+/// passes both checks is accepted even if no bank uses its code. <see cref="Bic"/> gives the BIC
+/// that this list assigns to the code, when it gives one.
 /// </para>
 /// <para>
 /// <c>default(BelgianIban)</c> is not a valid IBAN: <see cref="IsEmpty"/> is
@@ -35,7 +36,7 @@ namespace Hubertech.Belgium;
 /// </para>
 /// </remarks>
 /// <seealso href="https://www.swift.com/standards/data-standards/iban-international-bank-account-number">SWIFT: IBAN registry</seealso>
-/// <seealso href="https://www.nbb.be/en/payment-systems/payment-standards/bank-identification-codes">National Bank of Belgium: bank identification codes</seealso>
+/// <seealso href="https://www.nbb.be/en/payments-and-securities/bank-identification-codes">National Bank of Belgium: bank identification codes</seealso>
 [JsonConverter(typeof(BelgianIbanJsonConverter))]
 public readonly struct BelgianIban : IEquatable<BelgianIban>, ISpanFormattable, ISpanParsable<BelgianIban>, IBelgianIdentifier<BelgianIban>
 {
@@ -67,6 +68,31 @@ public readonly struct BelgianIban : IEquatable<BelgianIban>, ISpanFormattable, 
     public string BankCode => IsEmpty
         ? string.Empty
         : string.Create(3, _account, static (destination, account) => Digits.Write(destination, account / 1_000_000_000));
+
+    /// <summary>
+    /// Gets the BIC that the list of the National Bank of Belgium gives for the bank code, for
+    /// example <c>GEBABEBB</c> for bank code <c>001</c>.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// <see langword="null"/> when <see cref="IsEmpty"/> is <see langword="true"/>, or when the list
+    /// gives no BIC for the bank code: the code is free or unavailable, or the institution that
+    /// holds it has no BIC in the list.
+    /// </para>
+    /// <para>
+    /// The BIC is returned as published: eight characters, or eleven for the few codes the list
+    /// gives with a branch code, sometimes <c>XXX</c>. Compare the first eight characters when
+    /// only the bank matters.
+    /// </para>
+    /// <para>
+    /// The list is embedded in the package, whereas the National Bank of Belgium updates it each
+    /// time a code changes: a BIC can be outdated, and a code without a BIC may have been assigned
+    /// since. The README gives the date of the embedded list; a newer version of the package
+    /// carries a newer list. For a specific use, the National Bank of Belgium refers to the
+    /// institution concerned or to SWIFT.
+    /// </para>
+    /// </remarks>
+    public string? Bic => IsEmpty ? null : BankCodes.FindBic((int)(_account / 1_000_000_000));
 
     /// <summary>
     /// Gets the Belgian account number in its national notation, for example <c>539-0075470-34</c>.

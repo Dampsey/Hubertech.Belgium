@@ -63,6 +63,17 @@ public sealed class BelgianIbanPropertyTests
     }
 
     [Fact]
+    public void The_bic_is_the_one_of_the_bank_code()
+    {
+        ValidIban.Sample(electronic =>
+        {
+            var iban = BelgianIban.Parse(electronic);
+
+            Assert.Equal(BankCodes.FindBic(int.Parse(electronic.AsSpan(4, 3), CultureInfo.InvariantCulture)), iban.Bic);
+        });
+    }
+
+    [Fact]
     public void Every_single_digit_typo_is_detected()
     {
         Gen.Select(ValidIban, Gen.Int[2, 15], Gen.Int[1, 9]).Sample((iban, position, shift) =>
