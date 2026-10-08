@@ -34,6 +34,18 @@ dotnet run -c Release --project benchmarks/Hubertech.Belgium.Benchmarks -- --fil
 - **Structuring decisions are recorded** in [`docs/adr`](docs/adr). A record is never rewritten: a reversed decision gets a new record, a precision gets a dated amendment.
 - **No emoji**, in code, commits or documentation.
 
+## Releasing
+
+A release is made from `main`, by the maintainer:
+
+1. Open a pull request that moves the content of `PublicAPI.Unshipped.txt` to `PublicAPI.Shipped.txt` and gives the `[Unreleased]` entries of `CHANGELOG.md` a section `## [x.y.z] - YYYY-MM-DD`, with its comparison link. Merge it once CI is green.
+2. In the Actions tab, run the **Release** workflow on `main` with the version, for example `0.2.0`.
+3. Approve the deployment of the `nuget` environment.
+
+The workflow checks that the version is not released yet and has a section in the changelog, builds, tests and packs the commit, publishes the package to nuget.org, then creates the tag and the GitHub release with the section of the changelog. Pushing a tag `vx.y.z` on a commit of `main` runs the same workflow.
+
+After the release, a pull request sets `PackageValidationBaselineVersion` in `src/Hubertech.Belgium/Hubertech.Belgium.csproj` to the released version.
+
 ## Updating the bank codes
 
 `BelgianIban.Bic` reads `src/Hubertech.Belgium/BankCodes.Generated.cs`, generated from the [grouped list of bank identification codes](https://www.nbb.be/en/payments-and-securities/bank-identification-codes) of the National Bank of Belgium, which changes each time a code does. To take a new list:

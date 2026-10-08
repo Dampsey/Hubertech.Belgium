@@ -40,3 +40,7 @@ Separately from the version number itself, a breaking change to the public API m
 A tag `v*` runs `.github/workflows/release.yml`, which publishes to nuget.org with Trusted Publishing: the OIDC token of the run is exchanged for a short-lived API key, so no long-lived key is stored in the secrets of the repository. The nuget.org account comes from the `NUGET_USER` repository variable, and a trust policy on nuget.org names the repository and the workflow file.
 
 Before publishing anything, the workflow checks that the tag is on `main`, that `CHANGELOG.md` has a section for the version, that the tests pass, and that the package has the version of the tag. The job runs in the `nuget` environment, whose protection rules can require an approval. The GitHub release carries the packages and the section of the changelog.
+
+## Amendment (2026-10-08)
+
+The release workflow can also be run by hand, from the Actions tab, on `main`, with the version to release. It then tags the commit itself: locally for MinVer, and on GitHub with the release, on the commit the run started from. A release no longer requires Git on a machine. The checks are the same, plus two: the version must not be released already, and an existing tag of that version must be on the same commit. The tag stays a tag on `main`, and pushing it by hand still works.
