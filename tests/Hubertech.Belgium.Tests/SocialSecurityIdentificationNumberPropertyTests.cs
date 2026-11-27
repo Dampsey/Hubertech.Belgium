@@ -14,7 +14,7 @@ public sealed class SocialSecurityIdentificationNumberPropertyTests
 
     // Any valid number, computed independently of the library: a birth before 2000, or from 2000
     // up to the current year, with any day digits since the register does not always write a date.
-    private static readonly Gen<string> ValidNumber = Gen.Select(Gen.Bool, Gen.Int[0, 99], Gen.OneOfConst(Months), Gen.Int[0, 99], Gen.Int[0, 999])
+    private static readonly Gen<string> ValidNumber = Gen.Select(Gen.Bool, Gen.Int[0, 99], Gen.OneOf(Months), Gen.Int[0, 99], Gen.Int[0, 999])
         .Select((bornFrom2000, year, month, day, serial) =>
         {
             int yearDigits = bornFrom2000 ? year % (DateTime.UtcNow.Year - 1999) : year;
